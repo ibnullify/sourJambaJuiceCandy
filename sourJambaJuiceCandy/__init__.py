@@ -17,6 +17,13 @@ def root():
     body+= '<img src="' + url_for('static', filename='img/jambajuice.png') + '" width="500"</img>'
     return body
 
+@app.route('/signup')
+def signup():
+    body = "You should be provided an account/activation code from your teacher"
+    body += "<br>"
+    body+= "Insert form for making stuff here"
+    return body
+
 
 if __name__ == '__main__':
     app.debug = True #DANGER DANGER! Set to FALSE before deployment!
