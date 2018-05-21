@@ -1,7 +1,10 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template, request, session, flash, redirect
 from os import path
+import os
+import sqlite3
 
 app = Flask(__name__)
+app.secret_key = os.urandom(32)
 
 DIR = path.dirname(__file__)
 
@@ -19,10 +22,24 @@ def root():
 
 @app.route('/signup')
 def signup():
-    body = "You should be provided an account/activation code from your teacher"
-    body += "<br>"
-    body+= "Insert form for making stuff here"
-    return body
+    return render_template('signup.html')
+
+@app.route('/signin')
+def signin():
+    return render_template('signin.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.form['email'].find("stuy.edu") == -1:
+        error = 'Invalid email'
+    elif request.form['password'] != "password":
+        error = 'Invalid password'
+    else:
+        session['user'] = request.form['email'][ : request.form['email'].find("@")]
+        flash('You were logged in')
+        return redirect(url_for('root'))
+    return render_template('failed_login.html') #add error message as a parameter
 
 
 if __name__ == '__main__':

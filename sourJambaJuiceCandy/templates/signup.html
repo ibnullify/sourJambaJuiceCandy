@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Signup
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/login" method="post" id = 'createaccount'>
+  Email (Stuy G-Suite):<br>
+  <input type="text" name="email"><br>
+  Activation Code:<br>
+  <input type="text" name="code"> <br>
+  <input type="submit" value="Create Account">
+</form>
+
+<p>Already have an account? Click <a href = "/signin">here!</a> </p>
+
+
+{% endblock %}

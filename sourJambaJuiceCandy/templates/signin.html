@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Signin
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/login" method="post" id = 'attempt_signin'>
+  Email (Stuy G-Suite):<br>
+  <input type="text" name="email"><br>
+  Password:<br>
+  <input type="text" name="password"> <br>
+  <input type="submit" value="Login">
+</form>
+
+<p>Haven't activated your accout yet? Click <a href = "/signup">here!</a> </p>
+
+
+{% endblock %}

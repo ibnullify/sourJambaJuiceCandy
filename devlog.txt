@@ -35,3 +35,6 @@ Finished design document
 ibnulJ -- 2018-05-21 12:44:30
 Basic Flask app and start to first template. Also the repository is now restructured and in the DigitalOcean droplet
 
+ibnulJ -- 2018-05-21 18:44:30
+Added basic signin and signup templates, but they aren't connected to anything. Imported some files
+
