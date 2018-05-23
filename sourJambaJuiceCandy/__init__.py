@@ -13,15 +13,10 @@ DIR = path.dirname(__file__)
 
 @app.route('/')
 def root():
-    print "=====================================\nConsole Message\n"
-    print DIR + "\n====================================="
-    body = "<h2> Deployment Test </h2>"
-    body+= "DIR: " + DIR + "<br>"
-    
     if 'user' in session:
-        body += session['user']
-    body+= '<img src="' + url_for('static', filename='img/jambajuice.png') + '" width="500"</img>'
-    return body
+        return redirect(url_for('root'))
+    return render_template('index.html', dir = DIR)
+    
 
 @app.route('/signup')
 def signup():
