@@ -2,6 +2,7 @@ from flask import Flask, url_for, render_template, request, session, flash, redi
 from os import path
 import os
 import sqlite3
+import util.database as db
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -14,7 +15,7 @@ DIR = path.dirname(__file__)
 @app.route('/')
 def root():
     if 'user' in session:
-        return redirect(url_for('root'))
+        return render_template('index.html', dir = DIR)
     return render_template('index.html', dir = DIR)
     
 
