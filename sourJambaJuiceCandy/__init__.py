@@ -17,18 +17,26 @@ def root():
     print DIR + "\n====================================="
     body = "<h2> Deployment Test </h2>"
     body+= "DIR: " + DIR + "<br>"
+    
+    if 'user' in session:
+        body += session['user']
     body+= '<img src="' + url_for('static', filename='img/jambajuice.png') + '" width="500"</img>'
     return body
 
 @app.route('/signup')
 def signup():
+    if 'user' in session:
+        return redirect(url_for('root'));
     return render_template('signup.html')
 
 @app.route('/signin')
 def signin():
+    if 'user' in session:
+        return redirect(url_for('root'));
     return render_template('signin.html')
 
 
+##this solely serves as a redirect page
 @app.route('/login', methods=['POST'])
 def login():
     if request.form['email'].find("stuy.edu") == -1:
@@ -39,7 +47,7 @@ def login():
         session['user'] = request.form['email'][ : request.form['email'].find("@")]
         flash('You were logged in')
         return redirect(url_for('root'))
-    return render_template('failed_login.html') #add error message as a parameter
+    return render_template('failed_login.html', error = error) #add error message as a parameter
 
 
 if __name__ == '__main__':

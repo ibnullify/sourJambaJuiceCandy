@@ -7,8 +7,18 @@
 
 {% block body %}
 
+{% for msg in get_flashed_messages() %}
+<span style="color: red;">{{ msg }}</span> <br/>
+<br>
+{% endfor %}
+
 <h3>Something went wrong!</h3>
-<p>Either your username or password (or both) were wrong. Please go back and try again over <a href = "/">here</a> </p?
+<p>Either your username or password (or both) were wrong. Please go back and try again over <a href = "/">here</a> </p>
+
+<p>The error was your {{error}} </p>
+
+
+											
 
 
 {% endblock %}
