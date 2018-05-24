@@ -4,7 +4,8 @@ import os #Used for os.remove()
 
 f="absence_sys.db"
 try:
-    os.remove(f) #Used During Testing to remove file at the beginning
+    pass
+    #os.remove(f) #Used During Testing to remove file at the beginning
 except:
     pass
 
@@ -26,8 +27,8 @@ def make_tables():
     ##command = "INSERT INTO users VALUES('a', 'a', 'a')"
     ##c.execute(command);
 
-
-###################################THIS NEEDS REVAMPING#######################
+    
+#this makes an unactivated user
 def new_user(email, first, last, type):
     uname = email[ : email.find('@')]
     
@@ -38,9 +39,16 @@ def new_user(email, first, last, type):
     command = "INSERT INTO users VALUES(" + str(count) + ",'" + uname + "','" +  str(count) +"','" + first + "','" + last + "','" + email + "'," + str(type) +")"
     c.execute(command)
 
+##############MAKES TABLE IF IT DOESNT EXIST ALREADY###################
+try:
+    make_tables();
+except:
+    pass
 
-make_tables();
 new_user("ijahan1@stuy.edu", "ibnul", "jahan", 0)
+new_user("a3@stuy.edu", "a", "b", 0)
+new_user("b3@stuy.edu", "b", "c", 0)
+new_user("b4@stuy.edu", "b", "d", 0)
 #new_user("name", "pass")
 
 

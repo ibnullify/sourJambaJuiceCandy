@@ -38,3 +38,6 @@ Basic Flask app and start to first template. Also the repository is now restruct
 ibnulJ -- 2018-05-21 18:44:30
 Added basic signin and signup templates, but they aren't connected to anything. Imported some files
 
+ibnulJ -- 2018-05-24 12:12:32
+Database integration with flask app. You can kind of activate an account.
+
