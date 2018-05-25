@@ -14,7 +14,7 @@ c = db.cursor()    #facilitate db ops
 
 
 def make_tables():
-    #type 0 is student, 1 is teacher, 2 is parent
+    #type 0 is student, 1 is parent, 2 is teacher
     #user_id, username, password, first_name, last_name, email, type
     command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)"
     c.execute(command);

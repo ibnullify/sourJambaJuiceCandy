@@ -64,8 +64,8 @@ Making an account is not really a thing (by design). All accounts should be made
 @app.route('/')
 def root():
     if 'user' in session:
-        return render_template('index.html', in_session = in_session(), dir = DIR)
-    return render_template('index.html',  in_session = in_session(), dir = DIR)
+        return render_template('index.html', username = session['user'], in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
+    return render_template('index.html',  in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
     
 
 @app.route('/signup')
@@ -85,6 +85,7 @@ def activate():
         if data.activateable(request.form['email'], request.form['code']):
             error = "Your account does exist"
             session['user'] = request.form['email'][ : request.form['email'].find("@")]
+            session['type'] = data.check_account(request.form['email'], request.form['code'])[1]
             return render_template("create_password.html")
         else:
             return render_template("failed_login.html", error = "something wrong man")
@@ -98,7 +99,7 @@ def create_password():
     if (request.form['password'] == request.form['password_verif']):
         print session['user'] , request.form['password'] 
         newpass = data.activate_account( session['user'] , request.form['password'] )
-        return render_template("index.html", in_session = in_session(), dir = "Not a dir, but the new password is  ")
+        return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), username = session['user'], in_session = in_session(), dir = "Not a dir, but the new password is  ")
     return render_template("failed_login.html", error = "Passwords did not match")
 
 
@@ -138,7 +139,7 @@ def login():
 def logout():
     if in_session():
         session.pop('user')
-        return render_template("index.html", in_session = in_session())
+        return render_template("index.html", in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher())
     return render_template("failed_login.html", error = "YOU WERE NEVER LOGGED IN" )
 
 
@@ -148,12 +149,17 @@ def logout():
 
 ############# BEGINNING OF ROUTES FOR LOGGED IN ACCOUNTS #################
 
+@app.route('/notes_queue')
+def notes_queue():
+    if in_session():
+        return render_template("notes_queue.html")
+    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
+
+
 ######STUDENTS
-
-@app.route('/notes_student')
-def notes_students():
+@app.route('/new_form')
+def new_form():
     pass
-
 
 
 #####PARENTS
@@ -169,11 +175,14 @@ def in_session():
     return 'user' in session 
 
 def is_student():
-    pass
+    if in_session():
+        return session['type'] == 0
 def is_parent():
-    pass
+    if in_session():
+        return session['type'] == 1
 def is_teacher():
-    pass
+    if in_session():
+        return session['type'] == 2
 
 if __name__ == '__main__':
     app.debug = True #DANGER DANGER! Set to FALSE before deployment!
