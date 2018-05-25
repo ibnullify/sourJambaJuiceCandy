@@ -11,7 +11,12 @@ DIR: {{ dir }} <br>
 <form method="get" action="/signup">
   <button type="submit">Signup</button>
 </form>
-     
+
+{% if in_session %}
+<form method="get" action="/logout">
+  <button type="submit">Logout</button>
+</form>
+{% endif %}
 
 
 

@@ -19,8 +19,8 @@ c = db.cursor()    #facilitate db ops
 @app.route('/')
 def root():
     if 'user' in session:
-        return render_template('index.html', dir = DIR)
-    return render_template('index.html', dir = DIR)
+        return render_template('index.html', in_session = in_session(), dir = DIR)
+    return render_template('index.html',  in_session = in_session(), dir = DIR)
     
 
 @app.route('/signup')
@@ -41,6 +41,8 @@ def activate():
             error = "Your account does exist"
             session['user'] = request.form['email'][ : request.form['email'].find("@")]
             return render_template("create_password.html")
+        else:
+            return render_template("failed_login.html", error = "something wrong man")
     else:
         flash('You were logged in')
         return redirect(url_for('root'))
@@ -49,8 +51,9 @@ def activate():
 @app.route('/create_password', methods=['POST'])
 def create_password():
     if (request.form['password'] == request.form['password_verif']):
-        data.activate_account( session['user'] , request.form['password'] )
-        return render_template("index.html", dir = DIR)
+        print session['user'] , request.form['password'] 
+        newpass = data.activate_account( session['user'] , request.form['password'] )
+        return render_template("index.html", in_session = in_session(), dir = "Not a dir, but the new password is ")
     return render_template("failed_login.html", error = "Passwords did not match")
 
 
@@ -79,6 +82,12 @@ def login():
         return redirect(url_for('root'))
     return render_template('failed_login.html', error = error) #add error message as a parameter
 
+@app.route('/logout', methods=['POST','GET'])
+def logout():
+    if in_session():
+        session.pop('user')
+        return render_template("index.html", in_session = in_session())
+    return render_template("failed_login.html", error = "YOU WERE NEVER LOGGED IN" )
 
 ###HELPER FUNCTIONS###
 def in_session():

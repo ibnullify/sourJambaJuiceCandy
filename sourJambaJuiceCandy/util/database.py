@@ -8,10 +8,12 @@ c = db.cursor()
 
 #creating the db is handled in ../db_builder.py
 
+#This checks if the email, activation code combo works in the database
 def activateable( email, activation_code ) :
     f="absence_sys.db"
     db = sqlite3.connect(f) 
-    c = db.cursor() 
+    c = db.cursor()
+    
     command = "SELECT * FROM users WHERE email = '" + email + "'"
     c.execute(command);
     results = c.fetchall()
@@ -24,6 +26,13 @@ def activateable( email, activation_code ) :
     if (len(results) == 0):
         print "THAT EMAIL IS NOT ASSOCIATED WITH AN ACCOUNT!"
         return False
+    
+    command = "SELECT * FROM users WHERE email = '" + email + "' AND password = '" + activation_code + "'"
+    c.execute(command)
+    results = c.fetchall()
+    if (len(results)) == 0:
+        print "YOUR ACTIVATION CODE IS WRONG"
+        return False
     return True
 
 ##how do you update entries
@@ -32,11 +41,18 @@ def activate_account( username, newpass ):
     db = sqlite3.connect(f) 
     c = db.cursor() 
     #command = "SELECT password FROM users WHERE email = '" + email + "'"
-    command = "UPDATE users SET password = '" + newpass + "' WHERE username = '" + username + "'"
+    print newpass, username
+    command = "UPDATE users SET password = '" + str(newpass) + "' WHERE username = '" + username + "'"
     c.execute(command);
-    print c.fetchall()
+    print db.commit()
     #results = c.fetchall()
     print "password updated"
+
+    command = "SELECT password FROM users WHERE username = '" + username + "'"
+    c.execute(command)
+    
+    return c.fetchall()[0]
+
 
 def check_account( email, password ):
     pass
