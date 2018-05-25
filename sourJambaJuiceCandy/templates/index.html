@@ -16,6 +16,25 @@ DIR: {{ dir }} <br>
 <form method="get" action="/logout">
   <button type="submit">Logout</button>
 </form>
+
+<br><br>
+<a href = "/notifications"> Notifications </a>
+
+{% if is_student %}
+<a href = "/notes_student"> Notes</a>
+{% endif %}
+
+{% if is_parent %}
+<a href = "/notes_parent"> Notes</a>
+{% endif %}
+
+{% if is_teacher %}
+<a href = "/notes_teacher"> Notes</a>
+{% endif %}
+
+
+
+
 {% endif %}
 
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Homepage
+{% endblock %}
+
+
+{% block body %}
+I am assuming you are logged in. Nice.
+
+<form method="get" action="/logout">
+  <button type="submit">Logout</button>
+</form>
+
+
+
+{% endblock %}

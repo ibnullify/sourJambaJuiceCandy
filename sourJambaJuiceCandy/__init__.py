@@ -16,6 +16,51 @@ c = db.cursor()    #facilitate db ops
 
 #console output will appear in /var/log/apache2/error.log
 
+
+
+
+###############NOTES
+'''
+Should we dump the whole db entry that is logged in into the session (minus the password)
+This would be the username, first name, last name, email, and TYPE
+
+Should type be number based (slight ease of coding) or string based (ease of reading)
+
+Should account type differentiation be done through the flask and python or through the html and the templates
+Either the python can redirect to one of MANY templates, customized for each account type
+Or the html can all pull from a common base, but be heavily differentiated based on the account type
+^^^I think the latter of the two will be used -- mention this in the devlog later
+
+Should there be an activated? column in the database
+
+Still need to set of droplet database stuff because that does not work
+
+Absence notes have not been touched yet
+
+Randomize activation codes at the gen of the database, and then retrieve them with a temporary or access-locked file at the beginning to distribute
+
+Making an account is not really a thing (by design). All accounts should be made to start with, and should be activated by their account holders
+
+
+'''
+###############NOTES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/')
 def root():
     if 'user' in session:
@@ -53,7 +98,7 @@ def create_password():
     if (request.form['password'] == request.form['password_verif']):
         print session['user'] , request.form['password'] 
         newpass = data.activate_account( session['user'] , request.form['password'] )
-        return render_template("index.html", in_session = in_session(), dir = "Not a dir, but the new password is ")
+        return render_template("index.html", in_session = in_session(), dir = "Not a dir, but the new password is  ")
     return render_template("failed_login.html", error = "Passwords did not match")
 
 
@@ -71,7 +116,13 @@ def login():
     #if a form hasn't been submitted
     if request.method == 'GET':
         return redirect(url_for("signin"))
-    
+    if data.check_account( request.form['email'], request.form['password'] )[0]:
+        session['user'] = request.form['email'][ : request.form['email'].find("@")]
+        session['type'] = data.check_account( request.form['email'], request.form['password'] )[1]
+        flash('You were logged in')
+        return redirect(url_for('root'))
+    return render_template('failed_login.html', error = "WRONG LOGIN INFO") #add error message as a parameter
+    '''
     if request.form['email'].find("stuy.edu") == -1:
         error = 'Invalid email'
     elif request.form['password'] != "password":
@@ -81,6 +132,7 @@ def login():
         flash('You were logged in')
         return redirect(url_for('root'))
     return render_template('failed_login.html', error = error) #add error message as a parameter
+    '''
 
 @app.route('/logout', methods=['POST','GET'])
 def logout():
@@ -89,9 +141,39 @@ def logout():
         return render_template("index.html", in_session = in_session())
     return render_template("failed_login.html", error = "YOU WERE NEVER LOGGED IN" )
 
+
+############# END OF ADMINISTRATIVE LOGIN HANDLING #############################
+
+
+
+############# BEGINNING OF ROUTES FOR LOGGED IN ACCOUNTS #################
+
+######STUDENTS
+
+@app.route('/notes_student')
+def notes_students():
+    pass
+
+
+
+#####PARENTS
+
+
+
+#####TEACHERS
+
+
+
 ###HELPER FUNCTIONS###
 def in_session():
     return 'user' in session 
+
+def is_student():
+    pass
+def is_parent():
+    pass
+def is_teacher():
+    pass
 
 if __name__ == '__main__':
     app.debug = True #DANGER DANGER! Set to FALSE before deployment!

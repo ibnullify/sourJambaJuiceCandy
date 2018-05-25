@@ -19,13 +19,18 @@ def activateable( email, activation_code ) :
     results = c.fetchall()
     ##results[x] is the xth entry
     ##results[x][y] is the yth column of the xth entry
-    print results, len(results), results[0], results[0][0]
-    if (len(results) > 1):
-        print "THERE EXISTS MORE THAN ONE ACCOUNT WITH THAT EMAIL. INTERNAL ERROR!"
-        return False
+
     if (len(results) == 0):
         print "THAT EMAIL IS NOT ASSOCIATED WITH AN ACCOUNT!"
         return False
+    
+    print results, len(results), results[0], results[0][0]
+    
+    if (len(results) > 1):
+        print "THERE EXISTS MORE THAN ONE ACCOUNT WITH THAT EMAIL. INTERNAL ERROR!"
+        return False
+    
+    
     
     command = "SELECT * FROM users WHERE email = '" + email + "' AND password = '" + activation_code + "'"
     c.execute(command)
@@ -55,4 +60,17 @@ def activate_account( username, newpass ):
 
 
 def check_account( email, password ):
-    pass
+    f="absence_sys.db"
+    db = sqlite3.connect(f) 
+    c = db.cursor() 
+    command = "SELECT type FROM users WHERE email = '" + email + "' AND password = '" + password + "'"
+    c.execute(command)
+    results = c.fetchall()
+    if (len(results) > 1):
+        print "THERE ARE TWO IDENTICAL ACCOUNT LOGINS. INTERNAL ERROR"
+        return False
+    if (len(results) == 0):
+        print "INCORRECT LOGIN"
+        return False
+    return True, results[0][0]
+    
