@@ -14,18 +14,21 @@ c = db.cursor()    #facilitate db ops
 
 
 def make_tables():
+    #############USERS
+    
     #type 0 is student, 1 is parent, 2 is teacher
     #user_id, username, password, first_name, last_name, email, type
     command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)"
     c.execute(command);
 
+     #############NOTES
+    
     #integer 0 is false, 1 is true
     #id, osis, student_id, parent_id, explanation, signed_by_student, signed_by_parent, date, completed
     command= "CREATE TABLE absent_notes(id INTEGER, osis INTEGER, student_id INTEGER, parent_id INTEGER, explanation TEXT, signed_by_student INTEGER, signed_by_parent INTEGER, date BLOB, completed INTEGER )"
     c.execute(command);
-    
-    ##command = "INSERT INTO users VALUES('a', 'a', 'a')"
-    ##c.execute(command);
+
+
 
     
 #this makes an unactivated user

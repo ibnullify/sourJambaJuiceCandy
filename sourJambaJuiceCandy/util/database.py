@@ -74,3 +74,12 @@ def check_account( email, password ):
         return False
     return True, results[0][0]
     
+
+#add to big notes db
+#create individual note db
+def new_note( id, osis, student_id, parent_id, explanation, signed_by_student, signed_by_parent, date, completed):
+
+
+    command = "CREATE TABLE note_" + str(id) + "( course_code INTEGER, teacher TEXT, period INTEGER, signed INTEGER )"
+    pass
+    

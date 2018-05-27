@@ -6,12 +6,195 @@
 
 
 {% block body %}
+
+
 <p> Make a new form </p>
 
 
 
-<form action="/submit_form" method="get" id = "new_form">
-  <input type="submit" value="Make new form?">
+<form action="/submit_form" method="get" id="submit_form">
+  
+  OSIS:<br>
+  <input type="number" name="osis" required> <br>
+  DATE:<br>
+  <input type="date" name="date" required> <br>
+  EXCUSE:<br>
+  <input type="text" name="excuse" required> <br>
+  ABSENCE OR LATENESS? <br>
+  <input type="radio" name="form_type" id="absence" value="Absence" onclick="update_classes()" checked> Absence<br>
+  <input type="radio" name="form_type" id="lateness" value="Lateness" onclick="update_classes()"> Lateness<br>
+
+  <input type="number" name="classes_missed" id="classes_missed" value="10" style="visibility: hidden;">
+  <br>
+  
+
+  <table>
+    <tr style="visibility: visible;">
+      <td>
+	Period 1 Course Code: <br>
+	<input type="text" name="course_one"> <br>
+      </td>
+      <td>
+	Period 1 Teacher: <br>
+	<input type="text" name="teacher_one"> <br>
+      </td>
+    </tr>
+    
+    <tr style="visibility: visible;">
+      <td>
+	Period 2 Course Code: <br>
+	<input type="text" name="course_two"> <br>
+      </td>
+      <td>
+	Period 2 Teacher: <br>
+	<input type="text" name="teacher_two"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 3 Course Code: <br>
+	<input type="text" name="course_three"> <br>
+      </td>
+      <td>
+	Period 3 Teacher: <br>
+	<input type="text" name="teacher_three"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 4 Course Code: <br>
+	<input type="text" name="course_four"> <br>
+      </td>
+      <td>
+	Period 4 Teacher: <br>
+	<input type="text" name="teacher_four"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 5 Course Code: <br>
+	<input type="text" name="course_five"> <br>
+      </td>
+      <td>
+	Period 5 Teacher: <br>
+	<input type="text" name="teacher_five"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 6 Course Code: <br>
+	<input type="text" name="course_six"> <br>
+      </td>
+      <td>
+	Period 6 Teacher: <br>
+	<input type="text" name="teacher_six"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 7 Course Code: <br>
+	<input type="text" name="course_seven"> <br>
+      </td>
+      <td>
+	Period 7 Teacher: <br>
+	<input type="text" name="teacher_seven"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 8 Course Code: <br>
+	<input type="text" name="course_eight"> <br>
+      </td>
+      <td>
+	Period 8 Teacher: <br>
+	<input type="text" name="teacher_eight"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 9 Course Code: <br>
+	<input type="text" name="course_nine"> <br>
+      </td>
+      <td>
+	Period 9 Teacher: <br>
+	<input type="text" name="teacher_nine"> <br>
+      </td>
+    </tr>
+
+    <tr style="visibility: visible;">
+      <td>
+	Period 10 Course Code: <br>
+	<input type="text" name="course_ten"> <br>
+      </td>
+      <td>
+	Period 10 Teacher: <br>
+	<input type="text" name="teacher_ten"> <br>
+      </td>
+    </tr>
+  
+  </table>
+
+  <br>
+  
+  Digital Signature:
+  <input type="text" name="sigature" >
+  
+  <input type="submit" value="Submit form">
 </form>
+
+
+
+
+  
+
+<script>
+
+  function update_classes() {
+      console.log("hello");
+      if(document.getElementById("lateness").checked) {
+          console.log("hi");
+          document.getElementById("classes_missed").style.visibility = "visible";
+          
+      } else {
+          document.getElementById("classes_missed").style.visibility = "hidden";
+          document.getElementById("classes_missed").value = 10;
+      }
+  }
+  
+  var absence = document.getElementById("absence");
+  var lateness = document.getElementById("lateness");
+
+  var classes_missed = document.getElementById("classes_missed");
+  classes_missed.addEventListener("change", hide_classes )
+  
+  absence.addEventListener( "onclick", update_classes );
+  lateness.addEventListener( "onclick", update_classes );
+
+  var rows = document.getElementsByTagName("TR")
+
+  function hide_classes() { console.log("wfe");
+      for (i = 0; i < rows.length; i++) {
+          if ( i < classes_missed.value ){
+              rows[i].style.visibility = "visible";
+          } else {
+	      rows[i].style.visibility = "hidden";
+	      row = rows[i].getElementsByTagName("INPUT");
+	      for (j = 0; j < row.length; j++ ) {
+		  row[j].value="";
+	      }
+	  }
+     }
+  }	       
+
+  //absence.addEventListener( "onclick", hide_classes );
+			      
+</script>
 
 {% endblock %}

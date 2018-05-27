@@ -159,8 +159,15 @@ def notes_queue():
 ######STUDENTS
 @app.route('/new_form')
 def new_form():
-    pass
+    if in_session():
+        return render_template("new_form.html")
+    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
+@app.route('/submit_form')
+def submit_form():
+    if in_session():
+        return redirect(url_for(notes_queue))
+    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 #####PARENTS
 
