@@ -63,16 +63,16 @@ def check_account( email, password ):
     f="absence_sys.db"
     db = sqlite3.connect(f) 
     c = db.cursor() 
-    command = "SELECT type FROM users WHERE email = '" + email + "' AND password = '" + password + "'"
+    command = "SELECT * FROM users WHERE email = '" + email + "' AND password = '" + password + "'"
     c.execute(command)
     results = c.fetchall()
     if (len(results) > 1):
         print "THERE ARE TWO IDENTICAL ACCOUNT LOGINS. INTERNAL ERROR"
-        return False
+        return False, False, False, False, False, False, False
     if (len(results) == 0):
         print "INCORRECT LOGIN"
-        return False
-    return True, results[0][0]
+        return False, False, False, False, False, False, False
+    return True, results[0][0], results[0][1], results[0][3], results[0][4], results[0][5], results[0][6]
     
 
 #add to big notes db

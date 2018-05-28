@@ -24,7 +24,7 @@
   <input type="radio" name="form_type" id="absence" value="Absence" onclick="update_classes()" checked> Absence<br>
   <input type="radio" name="form_type" id="lateness" value="Lateness" onclick="update_classes()"> Lateness<br>
 
-  <input type="number" name="classes_missed" id="classes_missed" value="10" style="visibility: hidden;">
+  <input type="number" name="classes_missed" id="classes_missed" min="1" max="9" value="9" style="visibility: hidden;">
   <br>
   
 
@@ -161,10 +161,11 @@
       if(document.getElementById("lateness").checked) {
           console.log("hi");
           document.getElementById("classes_missed").style.visibility = "visible";
-          
+          hide_classes();
       } else {
           document.getElementById("classes_missed").style.visibility = "hidden";
-          document.getElementById("classes_missed").value = 10;
+          document.getElementById("classes_missed").value = 9;
+          hide_classes();
       }
   }
   
@@ -172,28 +173,32 @@
   var lateness = document.getElementById("lateness");
 
   var classes_missed = document.getElementById("classes_missed");
-  classes_missed.addEventListener("change", hide_classes )
+  classes_missed.addEventListener("change", hide_classes );
   
   absence.addEventListener( "onclick", update_classes );
   lateness.addEventListener( "onclick", update_classes );
 
-  var rows = document.getElementsByTagName("TR")
+  var rows = document.getElementsByTagName("TR");
 
   function hide_classes() { console.log("wfe");
       for (i = 0; i < rows.length; i++) {
           if ( i < classes_missed.value ){
-              rows[i].style.visibility = "visible";
+	      rows[i].style.visibility = "visible";
+	      row = rows[i].getElementsByTagName("INPUT");
+	      for (j = 0; j < row.length; j++ ) {
+		  row[j].setAttribute("required", "");
+	      }
           } else {
 	      rows[i].style.visibility = "hidden";
 	      row = rows[i].getElementsByTagName("INPUT");
 	      for (j = 0; j < row.length; j++ ) {
 		  row[j].value="";
+		  row[j].removeAttribute("required");	      
 	      }
 	  }
      }
   }	       
 
-  //absence.addEventListener( "onclick", hide_classes );
 			      
 </script>
 

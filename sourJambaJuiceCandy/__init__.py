@@ -84,8 +84,13 @@ def activate():
     if request.method == 'POST':
         if data.activateable(request.form['email'], request.form['code']):
             error = "Your account does exist"
-            session['user'] = request.form['email'][ : request.form['email'].find("@")]
-            session['type'] = data.check_account(request.form['email'], request.form['code'])[1]
+            session['user_id'] = data.check_account(request.form['email'], request.form['code'])[0]
+            session['user'] = data.check_account(request.form['email'], request.form['code'])[1]
+            session['first_name'] = data.check_account(request.form['email'], request.form['code'])[2]
+            session['last_name'] = data.check_account(request.form['email'], request.form['code'])[3]
+            session['email'] = data.check_account(request.form['email'], request.form['code'])[4]
+            session['type'] = data.check_account(request.form['email'], request.form['code'])[5]
+            
             return render_template("create_password.html")
         else:
             return render_template("failed_login.html", error = "something wrong man")
@@ -118,8 +123,15 @@ def login():
     if request.method == 'GET':
         return redirect(url_for("signin"))
     if data.check_account( request.form['email'], request.form['password'] )[0]:
-        session['user'] = request.form['email'][ : request.form['email'].find("@")]
-        session['type'] = data.check_account( request.form['email'], request.form['password'] )[1]
+        session['user_id'] = data.check_account(request.form['email'], request.form['password'])[1]
+        session['user'] = data.check_account(request.form['email'], request.form['password'])[2]
+        session['first_name'] = data.check_account(request.form['email'], request.form['password'])[3]
+        session['last_name'] = data.check_account(request.form['email'], request.form['password'])[4]
+        session['email'] = data.check_account(request.form['email'], request.form['password'])[5]
+        session['type'] = data.check_account(request.form['email'], request.form['password'])[6]
+
+       #session['user'] = request.form['email'][ : request.form['email'].find("@")]
+       #session['type'] = data.check_account( request.form['email'], request.form['password'] )[1]
         flash('You were logged in')
         return redirect(url_for('root'))
     return render_template('failed_login.html', error = "WRONG LOGIN INFO") #add error message as a parameter
@@ -163,10 +175,14 @@ def new_form():
         return render_template("new_form.html")
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
-@app.route('/submit_form')
+
+@app.route('/submit_form' , methods=['POST','GET'])
 def submit_form():
     if in_session():
-        return redirect(url_for(notes_queue))
+
+        #need to add way to connect student and parent accounts
+        data.new_note( session["user_id"], request.form["osis"], request.form["osis"], request.form["excuse"], 1, 0, request.form["date"], 0);
+        return redirect(url_for("notes_queue"))
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 #####PARENTS
