@@ -6,7 +6,8 @@ html {
 .jumbotron {
     padding: .5em;
     padding-bottom: .12em;
-	     
+    background:linear-gradient(rgba(0, 0, 250, 0.25), rgba(125, 250, 250, 0.45)),
+    url(https://source.unsplash.com/1600x1050/?nature);
 }
 
 .jumbotron h1{
@@ -18,9 +19,10 @@ ul{
     padding: 0px;
     list-style: none;
 }
+li{
+    color: white;
+}
 
 .image-link{
     text-decoration: none;
 }
-
-    
