@@ -12,7 +12,7 @@
 
 
 
-<form action="/submit_form" method="get" id="submit_form">
+<form action="/submit_form" method="post" id="submit_form">
   
   OSIS:<br>
   <input type="number" name="osis" required> <br>
@@ -160,11 +160,14 @@
       console.log("hello");
       if(document.getElementById("lateness").checked) {
           console.log("hi");
+          document.getElementById("classes_missed").max = 9;
+          document.getElementById("classes_missed").value = 9;
           document.getElementById("classes_missed").style.visibility = "visible";
           hide_classes();
       } else {
           document.getElementById("classes_missed").style.visibility = "hidden";
-          document.getElementById("classes_missed").value = 9;
+          document.getElementById("classes_missed").max = 10;
+          document.getElementById("classes_missed").value = 10;
           hide_classes();
       }
   }

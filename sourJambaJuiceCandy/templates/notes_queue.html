@@ -13,4 +13,11 @@
   <input type="submit" value="Make new form?">
 </form>
 
+<br>
+
+{% for entry in all_absences %}
+<p> {{entry}} </p>
+
+{% endfor %}
+
 {% endblock %}

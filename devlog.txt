@@ -47,3 +47,6 @@ You can activate an account and you can login to an account. Both of these funct
 cheungJ -- 2018-05-25 11:30
 Very basic css and link management
 
+ibnulJ -- 2018-05-29 10:56:54
+Absent note form now adds to a database, and the notes queue displays information about a user's absences
+
