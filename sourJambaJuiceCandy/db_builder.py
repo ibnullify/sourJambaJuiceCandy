@@ -2,6 +2,7 @@ import sqlite3   #enable control of an sqlite database
 import csv       #facilitates CSV I/O
 import os #Used for os.remove()
 
+
 f="absence_sys.db"
 try:
     #pass
