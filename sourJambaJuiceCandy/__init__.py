@@ -21,8 +21,6 @@ c = db.cursor()    #facilitate db ops
 
 ###############NOTES
 '''
-Should we dump the whole db entry that is logged in into the session (minus the password)
-This would be the username, first name, last name, email, and TYPE
 
 Should type be number based (slight ease of coding) or string based (ease of reading)
 
@@ -40,6 +38,13 @@ Absence notes have not been touched yet
 Randomize activation codes at the gen of the database, and then retrieve them with a temporary or access-locked file at the beginning to distribute
 
 Making an account is not really a thing (by design). All accounts should be made to start with, and should be activated by their account holders
+
+
+
+
+
+STUDENT TO PARENT TABLE
+Each entry is a student, column 1 is parent 1, column 2 is parent 2
 
 
 '''
@@ -105,10 +110,25 @@ def create_password():
         print session['user'] , request.form['password'] 
         newpass = data.activate_account( session['user'] , request.form['password'] )
         ###return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), username = session['user'], in_session = in_session(), dir = "Not a dir, but the new password is  ")
+
+        #Students get redirected to link a parent account
+        if is_student():
+            return render_template("link_parent_account.html")
         return redirect(url_for('root'))
     return render_template("failed_login.html", error = "Passwords did not match")
 
 
+######################################### Student Link to Parent
+@app.route('/link_parent_account', methods=['POST'])
+def link_parent_account():
+    if in_session():
+        if (request.form['parent_email'] == request.form['confirm_email']):
+            print "the emails are the same!"
+            data.add_parent_account( session['user_id'], request.form['parent_email'] )
+            return redirect(url_for("root"))
+        return render_template("failed_login.html", error = "EMAILS WERE DIFFERENT")
+    return redirect(url_for("root"))
+            
 @app.route('/signin')
 def signin():
     print request.method

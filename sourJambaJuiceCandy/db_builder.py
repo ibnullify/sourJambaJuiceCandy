@@ -4,8 +4,8 @@ import os #Used for os.remove()
 
 f="absence_sys.db"
 try:
-    pass
-    #os.remove(f) #Used During Testing to remove file at the beginning
+    #pass
+    os.remove(f) #Used During Testing to remove file at the beginning
 except:
     pass
 
@@ -21,6 +21,12 @@ def make_tables():
     command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)"
     c.execute(command);
 
+    ###########PARENTS
+    #student_id, parent1email, parent1id, parent1confirmation, parent2email, parent2id, parent2 confirmation
+    command = "CREATE TABLE student_parent(student_id INTEGER, parent_1_email TEXT, parent_1_id INTEGER, parent_1_confirm INTEGER, parent_2_email TEXT, parent_2_id INTEGER, parent_2_confirm INTEGER)"
+    c.execute(command);
+    
+    
      #############NOTES
     
     #integer 0 is false, 1 is true
@@ -41,6 +47,11 @@ def new_user(email, first, last, type):
     
     command = "INSERT INTO users VALUES(" + str(count) + ",'" + uname + "','" +  str(count) +"','" + first + "','" + last + "','" + email + "'," + str(type) +")"
     c.execute(command)
+
+
+    if type==0:
+        command = "INSERT INTO student_parent VALUES(" + str(count) + ",'','','','','','')"
+        c.execute(command)
 
 ##############MAKES TABLE IF IT DOESNT EXIST ALREADY###################
 try:

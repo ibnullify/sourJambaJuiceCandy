@@ -141,3 +141,22 @@ def retrieve_absent_note( note_id ):
     ##results[x][y] is the yth column of the xth entry
 
     return results
+
+
+def add_parent_account( student_id, parent_email ):
+    db = sqlite3.connect(f) 
+    c = db.cursor()
+
+    command = "SELECT COUNT(*) FROM users"
+    c.execute(command)
+    count = c.fetchone()[0]
+
+    #command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)"
+    
+    command = "INSERT INTO users VALUES(" + str(count) + ",'','" + str(count) + "','','','" + parent_email + "', 1)"
+    c.execute(command)
+
+    command = "INSERT INTO student_parent VALUES(" + str(student_id) + ",'" + parent_email + "', " + str(count) + ", 0, '', -1, 0)"
+    c.execute(command)
+
+    db.commit()
