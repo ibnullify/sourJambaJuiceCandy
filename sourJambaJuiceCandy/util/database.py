@@ -10,7 +10,7 @@ c = db.cursor()
 
 #This checks if the email, activation code combo works in the database
 def activateable( email, activation_code ) :
-    f="absence_sys.db"
+    #f="absence_sys.db"
     db = sqlite3.connect(f) 
     c = db.cursor()
     
@@ -42,7 +42,7 @@ def activateable( email, activation_code ) :
 
 ##how do you update entries
 def activate_account( username, newpass ):
-    f="absence_sys.db"
+    #f="absence_sys.db"
     db = sqlite3.connect(f) 
     c = db.cursor() 
     #command = "SELECT password FROM users WHERE email = '" + email + "'"
@@ -60,7 +60,7 @@ def activate_account( username, newpass ):
 
 
 def check_account( email, password ):
-    f="absence_sys.db"
+    #f="absence_sys.db"
     db = sqlite3.connect(f) 
     c = db.cursor() 
     command = "SELECT * FROM users WHERE email = '" + email + "' AND password = '" + password + "'"
@@ -80,7 +80,7 @@ def check_account( email, password ):
 #create individual note db
 def new_note( osis, student_id, parent_id, explanation, signed_by_student, signed_by_parent, date, completed, class_list):
 
-    f="absence_sys.db"
+    #f="absence_sys.db"
     db = sqlite3.connect(f) 
     c = db.cursor() 
 
@@ -116,7 +116,7 @@ def new_note( osis, student_id, parent_id, explanation, signed_by_student, signe
 
 
 def retrieve_absences( user_id ):
-    f="absence_sys.db"
+    #f="absence_sys.db"
     db = sqlite3.connect(f) 
     c = db.cursor()
     

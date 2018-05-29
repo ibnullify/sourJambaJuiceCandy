@@ -215,6 +215,15 @@ def submit_form():
         return redirect(url_for("notes_queue"))
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
+
+@app.route('/display_note' , methods=['POST','GET'])
+def display_note():
+    if in_session():
+        print request.args.get("id")
+        id = request.args.get("id")
+        return render_template("display_note.html", id = id)
+    return redirect(url_for("root"))
+
 #####PARENTS
 
 

@@ -16,7 +16,7 @@
 <br>
 
 {% for entry in all_absences %}
-<p> {{entry}} </p>
+<p> {{entry}}   <a href="/display_note?id={{entry[0]}}"> Expand Note </a> </p>
 
 {% endfor %}
 
