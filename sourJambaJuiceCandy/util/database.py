@@ -119,7 +119,7 @@ def retrieve_absences( user_id ):
     #f="absence_sys.db"
     db = sqlite3.connect(f) 
     c = db.cursor()
-    
+        
     command = "SELECT * FROM absent_notes WHERE student_id = " + str(user_id) + ""
     c.execute(command)
 
@@ -129,5 +129,15 @@ def retrieve_absences( user_id ):
 
     return results
 
+def retrieve_absent_note( note_id ):
+    db = sqlite3.connect(f) 
+    c = db.cursor()
 
-    
+    command = "SELECT * FROM note_" + str(note_id) + ""
+    c.execute(command)
+
+    results = c.fetchall()
+    ##results[x] is the xth entry
+    ##results[x][y] is the yth column of the xth entry
+
+    return results

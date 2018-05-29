@@ -9,7 +9,11 @@
 
 
 
-{{ id }}
+THIS IS THE NOTE ID: {{ id }}
+<br><br>
+{% for entry in note %}
+<p> {{entry}} </p>
+{% endfor %}
 
 
 

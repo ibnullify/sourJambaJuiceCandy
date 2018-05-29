@@ -221,7 +221,8 @@ def display_note():
     if in_session():
         print request.args.get("id")
         id = request.args.get("id")
-        return render_template("display_note.html", id = id)
+        note = data.retrieve_absent_note( id )
+        return render_template("display_note.html", id = id, note = note)
     return redirect(url_for("root"))
 
 #####PARENTS
