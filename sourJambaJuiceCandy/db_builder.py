@@ -65,6 +65,8 @@ new_user("a3@stuy.edu", "a", "b", 0)
 new_user("b3@stuy.edu", "b", "c", 0)
 new_user("b4@stuy.edu", "b", "d", 0)
 new_user("mrshenoy@stuy.edu", "Anish", "Shenoy", 2)
+new_user("mssharaf@stuy.edu", "Daisy", "Sharaf", 2)
+new_user("tmykolyk@stuy.edu", "Topher", "Brownmykolyk", 2)
 #new_user("name", "pass")
 
 

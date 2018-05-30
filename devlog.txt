@@ -57,4 +57,7 @@ anishS -- 2018-05-29 11:13:23
 4) Updated the new_note() function to include the teacher ID instead of the teacher name.
    The parameters are still the same the function just now takes the class list and uses the
    retrieve_teacher_id_by_name(first_name, last_name) function to substitute the teacher name for an ID. The class_list
-   should have the teachers full name now. 
+   should have the teachers full name now.
+
+anishS --  2018-05-29 11:49:23
+Students can select from a dropdown of teachers when filling out forms

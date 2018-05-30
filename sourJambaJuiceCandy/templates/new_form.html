@@ -13,7 +13,7 @@
 
 
 <form action="/submit_form" method="post" id="submit_form">
-  
+
   OSIS:<br>
   <input type="number" name="osis" required> <br>
   DATE:<br>
@@ -26,7 +26,7 @@
 
   <input type="number" name="classes_missed" id="classes_missed" min="1" max="9" value="9" style="visibility: hidden;">
   <br>
-  
+
 
   <table>
     <tr style="visibility: visible;">
@@ -36,18 +36,27 @@
       </td>
       <td>
 	Period 1 Teacher: <br>
-	<input type="text" name="teacher_one"> <br>
+	<select name="teacher_one">
+    {% for name in teacher_list %}
+      <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+    {% endfor %}
+  </select>
+      <br>
       </td>
     </tr>
-    
+
     <tr style="visibility: visible;">
       <td>
 	Period 2 Course Code: <br>
-	<input type="text" name="course_two"> <br>
+	 <br>
       </td>
       <td>
 	Period 2 Teacher: <br>
-	<input type="text" name="teacher_two"> <br>
+  <select name="teacher_two">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %}
+ </select> <br>
       </td>
     </tr>
 
@@ -58,7 +67,10 @@
       </td>
       <td>
 	Period 3 Teacher: <br>
-	<input type="text" name="teacher_three"> <br>
+  <select name="teacher_three">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %} </select><br>
       </td>
     </tr>
 
@@ -69,7 +81,10 @@
       </td>
       <td>
 	Period 4 Teacher: <br>
-	<input type="text" name="teacher_four"> <br>
+  <select name="teacher_five">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %} </select><br>
       </td>
     </tr>
 
@@ -80,7 +95,10 @@
       </td>
       <td>
 	Period 5 Teacher: <br>
-	<input type="text" name="teacher_five"> <br>
+  <select name="teacher_five">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %} </select><br>
       </td>
     </tr>
 
@@ -91,7 +109,10 @@
       </td>
       <td>
 	Period 6 Teacher: <br>
-	<input type="text" name="teacher_six"> <br>
+  <select name="teacher_six">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %} </select><br>
       </td>
     </tr>
 
@@ -102,7 +123,10 @@
       </td>
       <td>
 	Period 7 Teacher: <br>
-	<input type="text" name="teacher_seven"> <br>
+  <select name="teacher_seven">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %} </select><br>
       </td>
     </tr>
 
@@ -113,7 +137,10 @@
       </td>
       <td>
 	Period 8 Teacher: <br>
-	<input type="text" name="teacher_eight"> <br>
+  <select name="teacher_eight">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %} </select><br>
       </td>
     </tr>
 
@@ -124,7 +151,10 @@
       </td>
       <td>
 	Period 9 Teacher: <br>
-	<input type="text" name="teacher_nine"> <br>
+  <select name="teacher_nine">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %} </select><br>
       </td>
     </tr>
 
@@ -135,24 +165,28 @@
       </td>
       <td>
 	Period 10 Teacher: <br>
-	<input type="text" name="teacher_ten"> <br>
+  <select name="teacher_ten">
+  {% for name in teacher_list %}
+    <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
+  {% endfor %}
+ </select><br>
       </td>
     </tr>
-  
+
   </table>
 
   <br>
-  
+
   Digital Signature:
   <input type="text" name="sigature" >
-  
+
   <input type="submit" value="Submit form">
 </form>
 
 
 
 
-  
+
 
 <script>
 
@@ -171,13 +205,13 @@
           hide_classes();
       }
   }
-  
+
   var absence = document.getElementById("absence");
   var lateness = document.getElementById("lateness");
 
   var classes_missed = document.getElementById("classes_missed");
   classes_missed.addEventListener("change", hide_classes );
-  
+
   absence.addEventListener( "onclick", update_classes );
   lateness.addEventListener( "onclick", update_classes );
 
@@ -196,13 +230,13 @@
 	      row = rows[i].getElementsByTagName("INPUT");
 	      for (j = 0; j < row.length; j++ ) {
 		  row[j].value="";
-		  row[j].removeAttribute("required");	      
+		  row[j].removeAttribute("required");
 	      }
 	  }
      }
-  }	       
+  }
 
-			      
+
 </script>
 
 {% endblock %}

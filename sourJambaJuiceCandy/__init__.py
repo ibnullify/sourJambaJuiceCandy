@@ -17,8 +17,6 @@ c = db.cursor()    #facilitate db ops
 #console output will appear in /var/log/apache2/error.log
 
 
-
-
 ###############NOTES
 '''
 
@@ -49,22 +47,6 @@ Each entry is a student, column 1 is parent 1, column 2 is parent 2
 
 '''
 ###############NOTES
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @app.route('/')
 def root():
@@ -185,8 +167,9 @@ def logout():
 @app.route('/notes_queue')
 def notes_queue():
     if in_session():
-        absences = data.retrieve_absences_by_student( session["user_id"] )
-        return render_template("notes_queue.html", all_absences = absences)
+        if is_student():
+            absences = data.retrieve_absences_by_student( session["user_id"] )
+            return render_template("notes_queue.html", all_absences = absences)
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 
@@ -194,7 +177,7 @@ def notes_queue():
 @app.route('/new_form')
 def new_form():
     if in_session():
-        return render_template("new_form.html")
+        return render_template("new_form.html", teacher_list = data.get_teacher_names())
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 

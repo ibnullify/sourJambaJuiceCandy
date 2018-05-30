@@ -2,7 +2,7 @@
 
 import os, sys, sqlite3
 
-f = "../absence_sys.db"
+f = "absence_sys.db"
 db = sqlite3.connect(f)
 c = db.cursor()
 
@@ -74,9 +74,10 @@ def activate_account( username, newpass ):
 
     command = "SELECT password FROM users WHERE username = '" + username + "'"
     c.execute(command)
-    close(db)
 
-    return c.fetchall()[0]
+    ret = c.fetchall()[0]
+    close(db)
+    return ret
 
 def check_account( email, password ):
     #f="absence_sys.db"
