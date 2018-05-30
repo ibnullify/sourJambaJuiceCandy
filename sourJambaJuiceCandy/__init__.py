@@ -71,7 +71,7 @@ def root():
     if 'user' in session:
         return render_template('index.html', user_id = session["user_id"], username = session['user'], first_name = session["first_name"], last_name = session["last_name"], email = session["email"], type = session["type"], in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
     return render_template('index.html',  in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
-    
+
 
 @app.route('/signup')
 def signup():
@@ -85,7 +85,7 @@ def activate():
    # if in_session():
         ###return render_template("create_password.html")
     #    pass
-    
+
     if request.method == 'POST':
         if data.activateable(request.form['email'], request.form['code']):
             error = "Your account does exist"
@@ -95,7 +95,7 @@ def activate():
             session['last_name'] = data.check_account(request.form['email'], request.form['code'])[4]
             session['email'] = data.check_account(request.form['email'], request.form['code'])[5]
             session['type'] = data.check_account(request.form['email'], request.form['code'])[6]
-            
+
             return render_template("create_password.html")
         else:
             return render_template("failed_login.html", error = "something wrong man")
@@ -107,7 +107,7 @@ def activate():
 @app.route('/create_password', methods=['POST'])
 def create_password():
     if (request.form['password'] == request.form['password_verif']):
-        print session['user'] , request.form['password'] 
+        print session['user'] , request.form['password']
         newpass = data.activate_account( session['user'] , request.form['password'] )
         ###return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), username = session['user'], in_session = in_session(), dir = "Not a dir, but the new password is  ")
 
@@ -128,7 +128,7 @@ def link_parent_account():
             return redirect(url_for("root"))
         return render_template("failed_login.html", error = "EMAILS WERE DIFFERENT")
     return redirect(url_for("root"))
-            
+
 @app.route('/signin')
 def signin():
     print request.method
@@ -185,7 +185,7 @@ def logout():
 @app.route('/notes_queue')
 def notes_queue():
     if in_session():
-        absences = data.retrieve_absences( session["user_id"] )
+        absences = data.retrieve_absences_by_student( session["user_id"] )
         return render_template("notes_queue.html", all_absences = absences)
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
@@ -202,7 +202,7 @@ def new_form():
 def submit_form():
     print "on submit form"
     if in_session():
-        
+
         #dict = {}
         #dict[request.form["course_one"]] = request.form["teacher_one"]
         #dict[request.form["course_two"]] = request.form["teacher_two"]
@@ -228,10 +228,10 @@ def submit_form():
         class_list.append( [ request.form["course_ten"], request.form["teacher_ten"] ] )
 
         print "are you working here?"
-        
+
         #need to add way to connect student and parent accounts
         data.new_note( request.form["osis"], session["user_id"], 99, request.form["excuse"], 1, 0, request.form["date"], 0, class_list);
-        
+
         return redirect(url_for("notes_queue"))
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
@@ -255,7 +255,7 @@ def display_note():
 
 ###HELPER FUNCTIONS###
 def in_session():
-    return 'user' in session 
+    return 'user' in session
 
 def is_student():
     if in_session():

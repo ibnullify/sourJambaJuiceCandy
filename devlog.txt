@@ -19,13 +19,13 @@ LESSONS LEARNED
 
 ||||||||||||||||||||||||||||||||||||||||||
 
- ______   ______   __   __   __       ______   _______     
-/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
-\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
- \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\ 
-  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/ 
-   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
-    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
+ ______   ______   __   __   __       ______   _______
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/
 
 firstL -- TIMESTAMP\n
 <all the wonderful things and the not so wonderful bugs you discovered>
@@ -50,3 +50,11 @@ Very basic css and link management
 ibnulJ -- 2018-05-29 10:56:54
 Absent note form now adds to a database, and the notes queue displays information about a user's absences
 
+anishS -- 2018-05-29 11:13:23
+1) Added a few helper functions to open, commit, and close the database (we never closed it)
+2) Added the get_teacher_names() function to retrieve a master list of all teachers in the database
+3) Added the retrieve_teacher_id_by_name(first_name, last_name) function to retrieve a teacher id by a name.
+4) Updated the new_note() function to include the teacher ID instead of the teacher name.
+   The parameters are still the same the function just now takes the class list and uses the
+   retrieve_teacher_id_by_name(first_name, last_name) function to substitute the teacher name for an ID. The class_list
+   should have the teachers full name now. 
