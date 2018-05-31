@@ -34,6 +34,12 @@ def make_tables():
     #id, osis, student_id, parent_id, explanation, signed_by_student, signed_by_parent, date, completed
     command= "CREATE TABLE absent_notes(id INTEGER, osis INTEGER, student_id INTEGER, parent_id INTEGER, explanation TEXT, signed_by_student INTEGER, signed_by_parent INTEGER, date BLOB, completed INTEGER )"
     c.execute(command);
+    
+    #############STUDENT SCHEDULES
+
+    #student_id, osis, pdA, pdB, ... , pdJ
+    command= "CREATE TABLE student_schedule(student_id INTEGER, osis INTEGER, pdA INTEGER, pdB INTEGER, pdC INTEGER, pdD INTEGER, pdE INTEGER, pdF INTEGER, pdG INTEGER, pdH INTEGER, pdI INTEGER, pdJ INTEGER)"
+    c.execute(command);
 
 
 
