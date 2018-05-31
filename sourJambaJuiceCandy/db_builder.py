@@ -37,8 +37,8 @@ def make_tables():
     
     #############STUDENT SCHEDULES
 
-    #student_id, osis, pdA, pdB, ... , pdJ
-    command= "CREATE TABLE student_schedule(student_id INTEGER, osis INTEGER, pdA INTEGER, pdB INTEGER, pdC INTEGER, pdD INTEGER, pdE INTEGER, pdF INTEGER, pdG INTEGER, pdH INTEGER, pdI INTEGER, pdJ INTEGER)"
+    #student_id, pdA, pdB, ... , pdJ
+    command= "CREATE TABLE student_schedule(student_id INTEGER, pdA INTEGER, pdB INTEGER, pdC INTEGER, pdD INTEGER, pdE INTEGER, pdF INTEGER, pdG INTEGER, pdH INTEGER, pdI INTEGER, pdJ INTEGER)"
     c.execute(command);
 
 
