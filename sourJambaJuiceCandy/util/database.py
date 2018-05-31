@@ -210,3 +210,24 @@ def retrieve_absent_note( note_id ):
     ##results[x][y] is the yth column of the xth entry
     close(db)
     return results
+
+
+
+
+
+##class_list is a list of teachers for each period. FREE or LUNCH for a free or lunch
+
+# TO ADD LATER: perhaps add another column for the course name, which will be matched with 
+#the teachers schedule. So, if John says he has Mr. Smith for pd1, the course title will
+#automatically be added to his saved schedule because Mr. Smith has added all his courses into 
+#his schedule.
+
+def student_sched_addition(student_id , class_list):
+    db = get_db()
+    c = get_cursor(db)
+
+    command = "INSERT INTO student_schedule VALUES(" + student_id + "," + class_list[0] + "," + class_list[1] + "," + class_list[2] + "," + class_list[3] + "," + class_list[4] + "," + class_list[5] + "," + class_list[6] + "," + class_list[7] + "," + class_list[8] + "," + class_list[9] + " )"
+    c.execute(command)
+
+
+
