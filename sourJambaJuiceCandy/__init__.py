@@ -37,7 +37,9 @@ Randomize activation codes at the gen of the database, and then retrieve them wi
 
 Making an account is not really a thing (by design). All accounts should be made to start with, and should be activated by their account holders
 
+Email archive, sign a form and it emails you all the previous forms you have signed.
 
+Oauth to verify stuy.edu emails, ask for minimal permissions, access info on these accounts.
 
 
 
