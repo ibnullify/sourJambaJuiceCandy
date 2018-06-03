@@ -32,6 +32,7 @@ firstL -- TIMESTAMP\n
 
 ibnulJ, calebS, anishS, jasperC -- 2018-05-15 02:15
 Finished design document
+
 ibnulJ -- 2018-05-21 12:44:30
 Basic Flask app and start to first template. Also the repository is now restructured and in the DigitalOcean droplet
 
@@ -44,7 +45,7 @@ Database integration with flask app. You can kind of activate an account.
 ibnulJ -- 2018-05-25 11:08:32
 You can activate an account and you can login to an account. Both of these functions should work pretty well, but will definitely be updated at least slightly in the future. The beginning of site differentiation for the different account types has begun. Also, a NOTES comment section has been made in the main __init__.py file to remind us of major issues that we need to address as we code.
 
-cheungJ -- 2018-05-25 11:30
+jasperC -- 2018-05-25 11:30:00
 Very basic css and link management
 
 ibnulJ -- 2018-05-29 10:56:54
@@ -64,3 +65,6 @@ Students can select from a dropdown of teachers when filling out forms
 
 calebS -- 2018-05-31 12:30:00
 Began working on a student database that will hold the student's schedule.
+
+anishS, ibnulJ, calebS, jasperC -- 2018-06-03 18:15:43
+Added Google Login. Login.JS can access a user's edu email

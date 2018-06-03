@@ -8,8 +8,18 @@ function onSignIn(googleUser) {
     console.log("Image URL: " + profile.getImageUrl());
     console.log("Email: " + profile.getEmail());
     console.log("Profile: " + profile);
-    
+    console.log("Value: ");
+
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+
+    var value = {password: "hello", email: profile.getEmail()};
+
+    console.log(value);
+
+    $.post("login", value, function(data){
+      console.log("callback");
+      window.location = data;
+    });
 };

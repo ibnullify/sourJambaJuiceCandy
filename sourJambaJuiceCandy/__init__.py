@@ -124,21 +124,23 @@ def signin():
 ##this solely serves as a redirect page
 @app.route('/login', methods=['POST','GET'])
 def login():
+    print request.form["password"]
     #if a form hasn't been submitted
     if request.method == 'GET':
         return redirect(url_for("signin"))
     if data.check_account( request.form['email'], request.form['password'] )[0]:
+        print "logged"
         session['user_id'] = data.check_account(request.form['email'], request.form['password'])[1]
         session['user'] = data.check_account(request.form['email'], request.form['password'])[2]
         session['first_name'] = data.check_account(request.form['email'], request.form['password'])[3]
         session['last_name'] = data.check_account(request.form['email'], request.form['password'])[4]
         session['email'] = data.check_account(request.form['email'], request.form['password'])[5]
         session['type'] = data.check_account(request.form['email'], request.form['password'])[6]
-
+        print "logged2"
        #session['user'] = request.form['email'][ : request.form['email'].find("@")]
        #session['type'] = data.check_account( request.form['email'], request.form['password'] )[1]
-        flash('You were logged in')
-        return redirect(url_for('root'))
+        #flash('You were logged in')
+        return url_for('root')
     return render_template('failed_login.html', error = "WRONG LOGIN INFO") #add error message as a parameter
     '''
     if request.form['email'].find("stuy.edu") == -1:
