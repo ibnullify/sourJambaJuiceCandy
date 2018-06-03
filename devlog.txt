@@ -61,3 +61,6 @@ anishS -- 2018-05-29 11:13:23
 
 anishS --  2018-05-29 11:49:23
 Students can select from a dropdown of teachers when filling out forms
+
+calebS -- 2018-05-31 12:30:00
+Began working on a student database that will hold the student's schedule.
