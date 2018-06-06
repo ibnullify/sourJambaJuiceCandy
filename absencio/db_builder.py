@@ -3,7 +3,8 @@ import csv       #facilitates CSV I/O
 import os #Used for os.remove()
 
 
-f= "absence_sys.db"
+#f= "absence_sys.db"
+f= "var/www/absencio/absencio/absence_sys.db"
 try:
     #pass
     os.remove(f) #Used During Testing to remove file at the beginning

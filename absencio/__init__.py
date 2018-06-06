@@ -10,7 +10,8 @@ app.secret_key = os.urandom(32)
 DIR = path.dirname(__file__)
 
 ##########not sure if this is needed#######################
-f="absence_sys.db"
+#f="absence_sys.db"
+f="var/www/absencio/absencio/absence_sys.db"
 db = sqlite3.connect(f) #open if f exists, otherwise create
 c = db.cursor()    #facilitate db ops
 

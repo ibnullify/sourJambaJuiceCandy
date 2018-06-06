@@ -2,7 +2,8 @@
 
 import os, sys, sqlite3
 
-f = "absence_sys.db"
+#f = "absence_sys.db"
+f = "var/www/absencio/absencio/absence_sys.db"
 db = sqlite3.connect(f)
 c = db.cursor()
 
