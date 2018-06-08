@@ -233,7 +233,7 @@ def submit_form():
         #need to add way to connect student and parent accounts
         data.new_note( request.form["osis"], session["user_id"], 99, request.form["excuse"], 1, 0, request.form["date"], 0, class_list);
 
-        emailParent()
+        #emailParent()
 
         return redirect(url_for("notes_queue"))
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
