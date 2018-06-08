@@ -3,6 +3,11 @@ from os import path
 import os
 import sqlite3
 import util.database as data
+# Import smtplib for the actual sending function
+import smtplib
+
+# Import the email modules we'll need
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -223,6 +228,8 @@ def submit_form():
         #need to add way to connect student and parent accounts
         data.new_note( request.form["osis"], session["user_id"], 99, request.form["excuse"], 1, 0, request.form["date"], 0, class_list);
 
+        emailParent()
+        
         return redirect(url_for("notes_queue"))
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
@@ -238,6 +245,14 @@ def display_note():
 
 #####PARENTS
 
+def emailParent():
+    msg = MIMEText("hello world email")
+    msg['Subject'] = 'Absence note'
+    msg['From'] = "calebsmithsalzberg@gmail.com"
+    msg['To'] = "csmithsalzberg@stuy.edu"
+    s = smtplib.SMTP('localhost')
+    s.sendmail(me, [you], msg.as_string())
+    s.quit()
 
 
 #####TEACHERS
