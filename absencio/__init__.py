@@ -166,7 +166,12 @@ def login():
 @app.route('/logout', methods=['POST','GET'])
 def logout():
     if in_session():
-        session.pop('user')
+        session.pop('user_id')
+        session.pop('first_name')
+        session.pop('last_name')
+        session.pop('email')
+        session.pop('type')
+        session.pop('osis')
         return render_template("index.html", in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher())
     return render_template("failed_login.html", error = "YOU WERE NEVER LOGGED IN" )
 
