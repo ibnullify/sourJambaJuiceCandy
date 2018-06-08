@@ -68,3 +68,15 @@ Began working on a student database that will hold the student's schedule.
 
 anishS, ibnulJ, calebS, jasperC -- 2018-06-03 18:15:43
 Added Google Login. Login.JS can access a user's edu email
+
+anishS -- 2018-06-07 21:50:22
+Users are now added through their stuy.edu emails.
+1) A CSV called school_data.csv keeps track of all students and teachers with their osis and emails (teacher osis blank)
+2) When logging in, the google login sends the "/login" route the users fname, lname, and email
+3) "/login" sends that info to the check_account() function in database.py
+4) check_account() first checks if that email already exists in the database (the user has prev logged in)
+5) If it does exists, log them in. If not...
+6) The check_account() function calls activate_account()
+7) activate_account() checks to see if the email exists in the csvfile
+8) If it does, then the email, osis, fname, lname, and type are used to create a new entry in the database
+9) User is logged in and next time the CSV wont need to be accessed.
