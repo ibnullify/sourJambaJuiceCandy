@@ -80,3 +80,6 @@ Users are now added through their stuy.edu emails.
 7) activate_account() checks to see if the email exists in the csvfile
 8) If it does, then the email, osis, fname, lname, and type are used to create a new entry in the database
 9) User is logged in and next time the CSV wont need to be accessed.
+
+calebS -- 2018-06-08 12:30:00
+-Added basic auto email functionality.
