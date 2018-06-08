@@ -59,14 +59,14 @@ Each entry is a student, column 1 is parent 1, column 2 is parent 2
 
 @app.route('/')
 def root():
-    if 'user' in session:
-        return render_template('index.html', user_id = session["user_id"], username = session['user'], first_name = session["first_name"], last_name = session["last_name"], email = session["email"], type = session["type"], in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
+    if 'user_id' in session:
+        return render_template('index.html', user_id = session["user_id"], username = "", first_name = session["first_name"], last_name = session["last_name"], email = session["email"], type = session["type"], in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
     return render_template('index.html',  in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
 
 
 @app.route('/signup')
 def signup():
-    if 'user' in session:
+    if 'user_id' in session:
         return redirect(url_for('root'));
     return render_template('signup.html')
 
@@ -123,7 +123,7 @@ def link_parent_account():
 @app.route('/signin')
 def signin():
     print request.method
-    if 'user' in session:
+    if 'user_id' in session:
         return redirect(url_for('root'));
     return render_template('signin.html')
 
@@ -229,7 +229,7 @@ def submit_form():
         data.new_note( request.form["osis"], session["user_id"], 99, request.form["excuse"], 1, 0, request.form["date"], 0, class_list);
 
         emailParent()
-        
+
         return redirect(url_for("notes_queue"))
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
@@ -261,7 +261,7 @@ def emailParent():
 
 ###HELPER FUNCTIONS###
 def in_session():
-    return 'user' in session
+    return 'user_id' in session
 
 def is_student():
     if in_session():

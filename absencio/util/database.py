@@ -115,7 +115,7 @@ def get_teacher_names():
     c = get_cursor(db)
 
     command = "SELECT * FROM users WHERE type='2';"
-    teachers = [ [x[3].encode("utf-8"), x[4].encode("utf-8")] for x in c.execute(command).fetchall()]
+    teachers = [ [x[1].encode("utf-8"), x[2].encode("utf-8")] for x in c.execute(command).fetchall()]
     close(db)
     return teachers
 
