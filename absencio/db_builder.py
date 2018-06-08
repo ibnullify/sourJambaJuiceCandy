@@ -4,7 +4,7 @@ import os #Used for os.remove()
 
 
 #f= "absence_sys.db"
-f= "var/www/absencio/absencio/absence_sys.db"
+f= "absence_sys.db"
 try:
     #pass
     os.remove(f) #Used During Testing to remove file at the beginning
@@ -20,7 +20,7 @@ def make_tables():
 
     #type 0 is student, 1 is parent, 2 is teacher
     #user_id, username, password, first_name, last_name, email, type
-    command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)"
+    command= "CREATE TABLE users(user_id INTEGER, first_name TEXT, last_name TEXT, email TEXT, type INTEGER, osis TEXT)"
     c.execute(command);
 
     ###########PARENTS
@@ -35,7 +35,7 @@ def make_tables():
     #id, osis, student_id, parent_id, explanation, signed_by_student, signed_by_parent, date, completed
     command= "CREATE TABLE absent_notes(id INTEGER, osis INTEGER, student_id INTEGER, parent_id INTEGER, explanation TEXT, signed_by_student INTEGER, signed_by_parent INTEGER, date BLOB, completed INTEGER )"
     c.execute(command);
-    
+
     #############STUDENT SCHEDULES
 
     #student_id, pdA teacher, pdB teacher, ... , pdJ teacher
@@ -46,20 +46,20 @@ def make_tables():
 
 
 #this makes an unactivated user
-def new_user(email, first, last, type):
-    uname = email[ : email.find('@')]
+def new_user(email, first, last, type, osis):
 
     command = "SELECT COUNT(*) FROM users"
     c.execute(command)
     count = c.fetchone()[0]
 
-    command = "INSERT INTO users VALUES(" + str(count) + ",'" + uname + "','" +  str(count) +"','" + first + "','" + last + "','" + email + "'," + str(type) +")"
+    command = "INSERT INTO users VALUES(" + str(count) + ",'" + first + "','" + last + "','" + email + "'," + str(type) + ",'" + osis + "')"
     c.execute(command)
-
 
     if type==0:
         command = "INSERT INTO student_parent VALUES(" + str(count) + ",'','','','','','')"
         c.execute(command)
+
+    return count
 
 ##############MAKES TABLE IF IT DOESNT EXIST ALREADY###################
 try:
@@ -67,13 +67,8 @@ try:
 except:
     pass
 
-new_user("ijahan1@stuy.edu", "ibnul", "jahan", 0)
-new_user("a3@stuy.edu", "a", "b", 0)
-new_user("b3@stuy.edu", "b", "c", 0)
-new_user("b4@stuy.edu", "b", "d", 0)
-new_user("mrshenoy@stuy.edu", "Anish", "Shenoy", 2)
-new_user("mssharaf@stuy.edu", "Daisy", "Sharaf", 2)
-new_user("tmykolyk@stuy.edu", "Topher", "Brownmykolyk", 2)
+
+new_user("ijahan1@stuy.edu", "ibnul", "jahan", 0, "274373333")
 #new_user("name", "pass")
 
 

@@ -14,7 +14,7 @@ function onSignIn(googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
 
-    var value = {password: "hello", email: profile.getEmail()};
+    var value = {email: profile.getEmail(), first_name: profile.getGivenName(), last_name: profile.getFamilyName()};
 
     console.log(value);
 

@@ -1,9 +1,11 @@
 #!usr/bin/python
 
 import os, sys, sqlite3
+import csv
 
 #f = "absence_sys.db"
-f = "var/www/absencio/absencio/absence_sys.db"
+f = "absence_sys.db"
+csv_file = "school_data.csv"
 db = sqlite3.connect(f)
 c = db.cursor()
 
@@ -23,81 +25,70 @@ def close(db): #commits to and closes database
 #============================Users=========================#
 #============================================================#
 
-
-#This checks if the email, activation code combo works in the database
-def activateable( email, activation_code ) :
-    #f="absence_sys.db"
+def new_user(email, first, last, type, osis):
     db = get_db()
     c = get_cursor(db)
 
-    command = "SELECT * FROM users WHERE email = '" + email + "'"
-    c.execute(command);
-    results = c.fetchall()
-    ##results[x] is the xth entry
-    ##results[x][y] is the yth column of the xth entry
-
-    if (len(results) == 0):
-        print "THAT EMAIL IS NOT ASSOCIATED WITH AN ACCOUNT!"
-        close(db)
-        return False
-
-    print results, len(results), results[0], results[0][0]
-
-    if (len(results) > 1):
-        print "THERE EXISTS MORE THAN ONE ACCOUNT WITH THAT EMAIL. INTERNAL ERROR!"
-        close(db)
-        return False
-
-
-
-    command = "SELECT * FROM users WHERE email = '" + email + "' AND password = '" + activation_code + "'"
+    command = "SELECT COUNT(*) FROM users"
     c.execute(command)
-    results = c.fetchall()
-    if (len(results)) == 0:
-        print "YOUR ACTIVATION CODE IS WRONG"
-        close(db)
-        return False
+    count = c.fetchone()[0]
+
+    command = "INSERT INTO users VALUES(" + str(count) + ",'" + first + "','" + last + "','" + email + "'," + str(type) + ",'" + osis + "')"
+    c.execute(command)
+
+    if type==0:
+        command = "INSERT INTO student_parent VALUES(" + str(count) + ",'','','','','','')"
+        c.execute(command)
+
     close(db)
-    return True
+    return count
+
+
+#This checks if the email, activation code combo works in the database
+def activateable(email):
+    with open(csv_file, 'rb') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',')
+        for row in spamreader:
+            print row
+            if row[0] == email:
+                return row
+    return False
 
 ##how do you update entries
-def activate_account( username, newpass ):
-    #f="absence_sys.db"
+def activate_account(email, first_name, last_name):
     db = get_db()
     c = get_cursor(db)
     #command = "SELECT password FROM users WHERE email = '" + email + "'"
-    print newpass, username
-    command = "UPDATE users SET password = '" + str(newpass) + "' WHERE username = '" + username + "'"
-    c.execute(command);
-    print db.commit()
-    #results = c.fetchall()
-    print "password updated"
+    user_from_csv = activateable(email) #[email, osis, type]
+    id = new_user(email, first_name, last_name, user_from_csv[2], user_from_csv[1])
+    results = [id, email, first_name, last_name, user_from_csv[2], user_from_csv[1]]
+    return results
 
-    command = "SELECT password FROM users WHERE username = '" + username + "'"
-    c.execute(command)
-
-    ret = c.fetchall()[0]
-    close(db)
-    return ret
-
-def check_account( email, password ):
+def check_account(user_info):
     #f="absence_sys.db"
     db = get_db()
     c = get_cursor(db)
-    command = "SELECT * FROM users WHERE email = '" + email + "' AND password = '" + password + "'"
+    email = user_info["email"]
+    command = "SELECT * FROM users WHERE email = '" + email + "'"
     c.execute(command)
     results = c.fetchall()
+    print "Before "
+    print results
     if (len(results) > 1):
         print "THERE ARE TWO IDENTICAL ACCOUNT LOGINS. INTERNAL ERROR"
         close(db)
-        return False, False, False, False, False, False, False
+        return False, False, False, False, False
     if (len(results) == 0):
-        print "INCORRECT LOGIN"
-        close(db)
-        return False, False, False, False, False, False, False
-    #user_id, username, first_name, last_name, email, type
+        results = [activate_account(email, user_info["first_name"], user_info["last_name"])]
+        print "after: "
+        print results
+        if not results:
+            print "USER NOT FOUND IN SCHOOL DATA"
+            close(db)
+            return False, False, False, False, False
+    #user_id, first_name, last_name, email, type, osis
     close(db)
-    return True, results[0][0], results[0][1], results[0][3], results[0][4], results[0][5], results[0][6]
+    return True, results[0][0], results[0][1], results[0][2], results[0][3], results[0][4], results[0][5]
 
 def add_parent_account( student_id, parent_email ):
     db = get_db()
@@ -218,9 +209,9 @@ def retrieve_absent_note( note_id ):
 
 ##class_list is a list of teachers for each period. FREE or LUNCH for a free or lunch
 
-# TO ADD LATER: perhaps add another column for the course name, which will be matched with 
+# TO ADD LATER: perhaps add another column for the course name, which will be matched with
 #the teachers schedule. So, if John says he has Mr. Smith for pd1, the course title will
-#automatically be added to his saved schedule because Mr. Smith has added all his courses into 
+#automatically be added to his saved schedule because Mr. Smith has added all his courses into
 #his schedule.
 
 def student_sched_addition(student_id , class_list):
@@ -229,6 +220,3 @@ def student_sched_addition(student_id , class_list):
 
     command = "INSERT INTO student_schedule VALUES(" + student_id + "," + class_list[0] + "," + class_list[1] + "," + class_list[2] + "," + class_list[3] + "," + class_list[4] + "," + class_list[5] + "," + class_list[6] + "," + class_list[7] + "," + class_list[8] + "," + class_list[9] + " )"
     c.execute(command)
-
-
-

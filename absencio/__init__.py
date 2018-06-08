@@ -11,9 +11,10 @@ DIR = path.dirname(__file__)
 
 ##########not sure if this is needed#######################
 #f="absence_sys.db"
+'''
 f="var/www/absencio/absencio/absence_sys.db"
 db = sqlite3.connect(f) #open if f exists, otherwise create
-c = db.cursor()    #facilitate db ops
+c = db.cursor()    #facilitate db ops '''
 
 #console output will appear in /var/log/apache2/error.log
 
@@ -121,25 +122,27 @@ def signin():
         return redirect(url_for('root'));
     return render_template('signin.html')
 
-
 ##this solely serves as a redirect page
 @app.route('/login', methods=['POST','GET'])
 def login():
-    print request.form["password"]
     #if a form hasn't been submitted
     if request.method == 'GET':
         return redirect(url_for("signin"))
-    if data.check_account( request.form['email'], request.form['password'] )[0]:
+    if request.form["email"].find("@stuy.edu") == -1:
+        print "NEEDS TO BE A STUY.EDU EMAIL"
+        return render_template('failed_login.html', error = "Need Stuy.edu email") #add error message as a parameter
+    user = data.check_account(request.form)
+    if user[0]:
         print "logged"
-        session['user_id'] = data.check_account(request.form['email'], request.form['password'])[1]
-        session['user'] = data.check_account(request.form['email'], request.form['password'])[2]
-        session['first_name'] = data.check_account(request.form['email'], request.form['password'])[3]
-        session['last_name'] = data.check_account(request.form['email'], request.form['password'])[4]
-        session['email'] = data.check_account(request.form['email'], request.form['password'])[5]
-        session['type'] = data.check_account(request.form['email'], request.form['password'])[6]
+        session['user_id'] = user[1]
+        session['first_name'] = user[2]
+        session['last_name'] = user[3]
+        session['email'] = user[4]
+        session['type'] = user[5]
+        session['osis'] = user[6]
         print "logged2"
-       #session['user'] = request.form['email'][ : request.form['email'].find("@")]
-       #session['type'] = data.check_account( request.form['email'], request.form['password'] )[1]
+        #session['user'] = request.form['email'][ : request.form['email'].find("@")]
+        #session['type'] = data.check_account( request.form['email'], request.form['password'] )[1]
         #flash('You were logged in')
         return url_for('root')
     return render_template('failed_login.html', error = "WRONG LOGIN INFO") #add error message as a parameter
