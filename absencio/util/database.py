@@ -176,12 +176,13 @@ def new_note( osis, student_id, parent_id, explanation, signed_by_student, signe
     close(db)
     print "added to small"
 
-def retrieve_absences_by_student( user_id ):
+def retrieve_absences_by_student( user_id, completed ):
+    complete = {"pending": 0, "history": 1}
     #f="absence_sys.db"
     db = get_db()
     c = get_cursor(db)
 
-    command = "SELECT * FROM absent_notes WHERE student_id = " + str(user_id) + ""
+    command = "SELECT * FROM absent_notes WHERE student_id = " + str(user_id) + " AND completed = " + str(complete[completed]) + ""
     c.execute(command)
 
     results = c.fetchall()
@@ -202,6 +203,38 @@ def retrieve_absent_note( note_id ):
     ##results[x][y] is the yth column of the xth entry
     close(db)
     return results
+
+def parent_sign_note( note_id ):
+    db = get_db()
+    c = get_cursor(db)
+
+    command = "UPDATE absent_notes SET signed_by_parent = 1 WHERE id = " + str(note_id)
+    c.execute(command)
+
+    close(db)
+
+    check_if_completed(note_id)
+
+    print "Parent signed note: " + str(note_id)
+
+def check_if_completed( note_id ):
+    note = retrieve_absent_note( note_id )
+    signed_by_teachers = True
+    for teacher in note:
+        if teacher[3] == 0:
+            signed_by_teachers = False
+    if not signed_by_teachers:
+        print "Not yet signed by all teachers"
+        return False
+
+    db = get_db()
+    c = get_cursor(db)
+
+    command = "UPDATE absent_notes SET completed = 1 WHERE id = " + str(note_id) + " AND signed_by_parent = 1 AND signed_by_student = 1"
+    c.execute(command)
+    close(db)
+    print "Note updated as completed"
+    return True
 
 
 

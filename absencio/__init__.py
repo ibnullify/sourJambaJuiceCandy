@@ -182,12 +182,20 @@ def logout():
 
 ############# BEGINNING OF ROUTES FOR LOGGED IN ACCOUNTS #################
 
-@app.route('/notes_queue')
-def notes_queue():
+@app.route('/notes_queue_pending')
+def notes_queue_pending():
     if in_session():
         if is_student():
-            absences = data.retrieve_absences_by_student( session["user_id"] )
-            return render_template("notes_queue.html", all_absences = absences)
+            absences = data.retrieve_absences_by_student( session["user_id"], "pending" )
+            return render_template("notes_queue_pending.html", all_absences = absences)
+    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
+
+@app.route('/notes_queue_history')
+def notes_queue_history():
+    if in_session():
+        if is_student():
+            absences = data.retrieve_absences_by_student( session["user_id"], "history" )
+            return render_template("notes_queue_history.html", all_absences = absences)
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 
@@ -255,9 +263,23 @@ def emailParent():
     msg['Subject'] = 'Absence note'
     msg['From'] = "calebsmithsalzberg@gmail.com"
     msg['To'] = "csmithsalzberg@stuy.edu"
-    s = smtplib.SMTP('localhost')
+    s = smtplib.SMTP('localhost:5000')
     s.sendmail(me, [you], msg.as_string())
     s.quit()
+
+@app.route('/parent_sign/<int:note_id>', methods=['POST','GET'])
+def parent_sign(note_id):
+    if request.method == "POST":
+        data.parent_sign_note(note_id)
+        print "PARENT SIGNED NOTE: " + str(note_id)
+        return "THANK YOU"
+    else:
+        note = data.retrieve_absent_note( note_id )
+        return render_template("parent_sign.html", id = note_id, note = note)
+
+
+
+
 
 
 #####TEACHERS
