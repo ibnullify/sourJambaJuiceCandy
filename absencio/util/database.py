@@ -61,7 +61,10 @@ def activate_account(email, first_name, last_name):
     #command = "SELECT password FROM users WHERE email = '" + email + "'"
     user_from_csv = activateable(email) #[email, osis, type]
     id = new_user(email, first_name, last_name, user_from_csv[2], user_from_csv[1])
-    results = [id, email, first_name, last_name, user_from_csv[2], user_from_csv[1]]
+    if int(user_from_csv[2]) == 0:
+        print "adding parent email"
+        add_parent_account(id, user_from_csv[3])
+    results = [id, email, first_name, last_name, user_from_csv[2], user_from_csv[1], user_from_csv[3]]
     return results
 
 def check_account(user_info):
@@ -85,23 +88,33 @@ def check_account(user_info):
         if not results:
             print "USER NOT FOUND IN SCHOOL DATA"
             close(db)
-            return False, False, False, False, False
+            return False, False, False, False, False, False
+        close(db)
+        return True, results[0][0], results[0][1], results[0][2], results[0][3], results[0][4], results[0][5], results[0][6]
     #user_id, first_name, last_name, email, type, osis
     close(db)
-    return True, results[0][0], results[0][1], results[0][2], results[0][3], results[0][4], results[0][5]
+    list(results)
+    results = list(results)
+    results[0] = list(results[0])
+    results[0].append(get_parent_email(results[0][0])[0])
+    return True, results[0][0], results[0][1], results[0][2], results[0][3], results[0][4], results[0][5], results[0][6]
+
+def get_parent_email( student_id ):
+    db = get_db()
+    c = get_cursor(db)
+
+    command = "SELECT parent_1_email FROM student_parent WHERE student_id = " + str(student_id)
+    c.execute(command)
+
+    results = c.fetchone()
+    close(db)
+    return results
 
 def add_parent_account( student_id, parent_email ):
     db = get_db()
     c = get_cursor(db)
 
-    command = "SELECT COUNT(*) FROM users"
-    c.execute(command)
-    count = c.fetchone()[0]
-
-    #command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)"
-
-    command = "INSERT INTO users VALUES(" + str(count) + ",'','" + str(count) + "','','','" + parent_email + "', 1)"
-    c.execute(command)
+    #command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)
 
     command = "INSERT INTO student_parent VALUES(" + str(student_id) + ",'" + parent_email + "', " + str(count) + ", 0, '', -1, 0)"
     c.execute(command)

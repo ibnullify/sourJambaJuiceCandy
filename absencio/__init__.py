@@ -64,51 +64,6 @@ def root():
     return render_template('index.html',  in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
 
 
-@app.route('/signup')
-def signup():
-    if 'user_id' in session:
-        return redirect(url_for('root'));
-    return render_template('signup.html')
-
-##this solely serves as a redirect page
-@app.route('/activate', methods=['POST'])
-def activate():
-   # if in_session():
-        ###return render_template("create_password.html")
-    #    pass
-
-    if request.method == 'POST':
-        if data.activateable(request.form['email'], request.form['code']):
-            error = "Your account does exist"
-            session['user_id'] = data.check_account(request.form['email'], request.form['code'])[1]
-            session['user'] = data.check_account(request.form['email'], request.form['code'])[2]
-            session['first_name'] = data.check_account(request.form['email'], request.form['code'])[3]
-            session['last_name'] = data.check_account(request.form['email'], request.form['code'])[4]
-            session['email'] = data.check_account(request.form['email'], request.form['code'])[5]
-            session['type'] = data.check_account(request.form['email'], request.form['code'])[6]
-
-            return render_template("create_password.html")
-        else:
-            return render_template("failed_login.html", error = "something wrong man")
-    else:
-        flash('You were logged in')
-        return redirect(url_for('root'))
-    return render_template('failed_login.html', error = error) #add error message as a parameter
-
-@app.route('/create_password', methods=['POST'])
-def create_password():
-    if (request.form['password'] == request.form['password_verif']):
-        print session['user'] , request.form['password']
-        newpass = data.activate_account( session['user'] , request.form['password'] )
-        ###return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), username = session['user'], in_session = in_session(), dir = "Not a dir, but the new password is  ")
-
-        #Students get redirected to link a parent account
-        if is_student():
-            return render_template("link_parent_account.html")
-        return redirect(url_for('root'))
-    return render_template("failed_login.html", error = "Passwords did not match")
-
-
 ######################################### Student Link to Parent
 @app.route('/link_parent_account', methods=['POST'])
 def link_parent_account():
@@ -143,8 +98,10 @@ def login():
         session['first_name'] = user[2]
         session['last_name'] = user[3]
         session['email'] = user[4]
-        session['type'] = user[5]
+        session['type'] = int(user[5])
         session['osis'] = user[6]
+        session['parent_email'] = user[7]
+        print user[7]
         print "logged2"
         #session['user'] = request.form['email'][ : request.form['email'].find("@")]
         #session['type'] = data.check_account( request.form['email'], request.form['password'] )[1]
@@ -172,6 +129,7 @@ def logout():
         session.pop('email')
         session.pop('type')
         session.pop('osis')
+        session.pop('parent_email')
         return render_template("index.html", in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher())
     return render_template("failed_login.html", error = "YOU WERE NEVER LOGGED IN" )
 

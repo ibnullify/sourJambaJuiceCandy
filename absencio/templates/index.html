@@ -8,8 +8,8 @@ SourJambaJuice
 <h2> JambaJuice </h2>
 DIR: {{ dir }} <br>
 <img src="{{ url_for('static', filename='img/jambajuice.png') }}" width="500"></img>
-<form method="get" action="/signup">
-  <input type="submit" value="Sign Up">
+<form method="get" action="/signin">
+  <input type="submit" value="Sign In">
 </form>
 
 {% if in_session %}
