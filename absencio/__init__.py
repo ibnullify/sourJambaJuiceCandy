@@ -187,7 +187,9 @@ def notes_queue_pending():
     if in_session():
         if is_student():
             absences = data.retrieve_absences_by_student( session["user_id"], "pending" )
-            return render_template("notes_queue_pending.html", all_absences = absences)
+        if is_teacher():
+            absences = data.retrieve_absences_by_teacher( session["user_id"], "pending")
+        return render_template("notes_queue_pending.html", all_absences = absences)
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 @app.route('/notes_queue_history')
@@ -195,7 +197,9 @@ def notes_queue_history():
     if in_session():
         if is_student():
             absences = data.retrieve_absences_by_student( session["user_id"], "history" )
-            return render_template("notes_queue_history.html", all_absences = absences)
+        if is_teacher():
+            absences = data.retrieve_absences_by_teacher( session["user_id"], "history")
+        return render_template("notes_queue_history.html", all_absences = absences)
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 
@@ -203,7 +207,9 @@ def notes_queue_history():
 @app.route('/new_form')
 def new_form():
     if in_session():
-        return render_template("new_form.html", teacher_list = data.get_teacher_names())
+        list = data.get_teacher_names()
+        #list.append("Bob")
+        return render_template("new_form.html", teacher_list = list)
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 
@@ -243,17 +249,23 @@ def submit_form():
 
         #emailParent()
 
-        return redirect(url_for("notes_queue"))
+        return redirect(url_for("notes_queue_pending"))
     return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
 
 
-@app.route('/display_note' , methods=['POST','GET'])
-def display_note():
+@app.route('/display_note' , methods=['GET'])
+@app.route('/display_note/<int:note_id>', methods=['POST'])
+def display_note(note_id = 0):
     if in_session():
+        if request.method == "POST" and is_teacher():
+            print "Teacher signin"
+            data.teacher_sign_note(note_id, session["user_id"])
+            print "TEACHER SIGNED NOTE: " + str(note_id)
+            return "THANK YOU"
         print request.args.get("id")
         id = request.args.get("id")
         note = data.retrieve_absent_note( id )
-        return render_template("display_note.html", id = id, note = note)
+        return render_template("display_note.html", id = id, note = note, is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher())
     return redirect(url_for("root"))
 
 #####PARENTS
@@ -277,28 +289,31 @@ def parent_sign(note_id):
         note = data.retrieve_absent_note( note_id )
         return render_template("parent_sign.html", id = note_id, note = note)
 
-
-
-
-
-
 #####TEACHERS
 
 
 
 ###HELPER FUNCTIONS###
 def in_session():
-    return 'user_id' in session
+    bool = 'user_id' in session
+    print "In session: " + str(bool)
+    return bool
 
 def is_student():
     if in_session():
-        return session['type'] == 0
+        bool = session['type'] == 0
+        print "Is Student: " + str(bool)
+        return bool
 def is_parent():
     if in_session():
-        return session['type'] == 1
+        bool = session['type'] == 1
+        print "Is Parent: " + str(bool)
+        return bool
 def is_teacher():
     if in_session():
-        return session['type'] == 2
+        bool = session['type'] == 2
+        print "Is Teacher: " + str(bool)
+        return bool
 
 if __name__ == '__main__':
     app.debug = True #DANGER DANGER! Set to FALSE before deployment!

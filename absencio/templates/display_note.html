@@ -15,6 +15,16 @@ THIS IS THE NOTE ID: {{ id }}
 <p> {{entry}} </p>
 {% endfor %}
 
+{% if is_teacher %}
+Digital Signature:
+<form action = "/display_note/{{ id }}" method="post" id="form">
+<input type="text" name="sigature" >
+<input type="hidden" name="note_id" value="{{ id }}" />
+
+<input type="submit" value="Submit form">
+</form>
+{% endif %}
+
 
 
 

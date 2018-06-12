@@ -191,6 +191,33 @@ def retrieve_absences_by_student( user_id, completed ):
     close(db)
     return results
 
+def retrieve_absences_by_teacher( teacher_id, completed ):
+    complete = {"pending": 0, "history": 1}
+    #f="absence_sys.db"
+    db = get_db()
+    c = get_cursor(db)
+
+    command = "SELECT * FROM absent_notes WHERE completed = " + str(complete[completed]) + ""
+    c.execute(command)
+
+    results = c.fetchall()
+
+    ret = []
+
+
+    for result in results:
+        id = result[0]
+        print id
+        note = retrieve_absent_note( id )
+        for period in note:
+            print period[1]
+            if teacher_id == period[1]:
+                ret.append(result)
+                break
+
+    close(db)
+    return ret
+
 def retrieve_absent_note( note_id ):
     db = get_db()
     c = get_cursor(db)
@@ -216,6 +243,19 @@ def parent_sign_note( note_id ):
     check_if_completed(note_id)
 
     print "Parent signed note: " + str(note_id)
+
+def teacher_sign_note( note_id, teacher_id ):
+    db = get_db()
+    c = get_cursor(db)
+
+    command = "UPDATE note_" + str(note_id) + " SET signed = 1 WHERE teacher_id = " + str(teacher_id)
+    c.execute(command)
+
+    close(db)
+
+    check_if_completed(note_id)
+
+    print "Teacher signed note: " + str(note_id)
 
 def check_if_completed( note_id ):
     note = retrieve_absent_note( note_id )

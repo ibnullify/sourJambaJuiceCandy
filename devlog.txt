@@ -89,3 +89,9 @@ Absence notes are now kept track of
 1) A custom url is generated for all notes for parents to sign ("/parent_sign/<note_id>")
 2) Parents can now sign all notes
 3) There are now 2 routes to view notes: pending and history
+
+anishS -- 2018-06-12 00:10:22
+Teacher accounts have been added
+**Notes history wont be updated until the note has been totally finished
+1) Display Note gives teachers the option to sign a note
+2) Notes are updated when they are completed
