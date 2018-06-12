@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Display Note
+{% endblock %}
+
+
+{% block body %}
+
+
+
+THIS IS THE NOTE ID: {{ id }}
+<br><br>
+{% for entry in note %}
+<p> {{entry}} </p>
+{% endfor %}
+
+<form action="/parent_sign/{{ id }}" method="POST" id = "sign_form">
+  <input type="submit" value="SIGN FORM">
+</form>
+
+
+
+
+
+{% endblock %}

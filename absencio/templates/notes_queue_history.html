@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Notes Queue
+{% endblock %}
+
+
+{% block body %}
+<p> Insert queue of active absent notes here </p>
+
+
+<br>
+
+{% for entry in all_absences %}
+<p> {{entry}}   <a href="/display_note?id={{entry[0]}}"> Expand Note </a> </p>
+
+{% endfor %}
+
+{% endblock %}
