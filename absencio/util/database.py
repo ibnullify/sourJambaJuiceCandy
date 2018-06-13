@@ -4,8 +4,9 @@ import os, sys, sqlite3
 import csv
 
 #f = "absence_sys.db"
-f = "absence_sys.db"
-csv_file = "school_data.csv"
+basedir = os.path.abspath(os.path.dirname(__file__))
+f = basedir + "/./absence_sys.db"
+csv_file = basedir + "/./school_data.csv"
 db = sqlite3.connect(f)
 c = db.cursor()
 
