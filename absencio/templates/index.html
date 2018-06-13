@@ -1,50 +1,54 @@
 {% extends "base.html" %}
 
 {% block title %}
-SourJambaJuice
+Home
 {% endblock %}
 
 {% block body %}
-<h2> JambaJuice </h2>
-DIR: {{ dir }} <br>
-<img src="{{ url_for('static', filename='img/jambajuice.png') }}" width="500"></img>
-<form method="get" action="/signin">
-  <input type="submit" value="Sign In">
-</form>
+<div class="container">
+  <div class="header clearfix">
+    <h3 class="text-muted">Absentio</h3>
+  </div>
 
-{% if in_session %}
-<form method="get" action="/logout">
-  <button type="submit">Logout</button>
-</form>
+  <div class="jumbotron">
+    <h1 class="display-3">Welcome {{ first_name }} {{ last_name }}!</h1>
+    <br>
+    {% if is_student %}
+    <p class="lead">Click here to make a new note</p>
+    <p><a class="btn btn-lg btn-success" href="/new_form" role="button">Create A New Note</a></p>
+    {% endif %}
+  </div>
 
-<p> ACCOUNT INFO: </p>
-<p> User_id: {{ user_id}} </p>
-<p> User: {{ username }} </p>
-<p> First Name: {{ first_name }} </p>
-<p> Last Name: {{ last_name }} </p>
-<p> Email: {{ email }} </p>
-<p> Type: {{ type }} </p>
+  <div class="row marketing">
+    <div class="col-lg-6">
+      <h2> <u> Pending Notes </u> </h2> <br>
+      {% for entry in pending %}
+        <h4>Subheading</h4>
+        <p> {{entry}}   <a href="/display_note?id={{entry[0]}}"> Expand Note </a> </p>
+      {% endfor %}
+    </div>
 
+    <div class="col-lg-6">
+      <h2> <u> Completed Notes </u> </h2> <br>
+      {% for entry in history %}
+        <h4>Subheading</h4>
+        <p> {{entry}}   <a href="/display_note?id={{entry[0]}}"> Expand Note </a> </p>
+      {% endfor %}
+    </div>
+  </div>
 
-<br><br>
-<a href = "/notifications"> Notifications </a>
+  <footer class="footer">
+    <nav>
+      <ul class="nav nav-pills float-right">
+        <li class="nav-item">
+          <a class="nav-link active" href="/logout">Logout <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </nav>
+    <p>&copy; SourJambaJuiceCandy</p>
+  </footer>
 
-{% if is_student %}
-<a href = "/notes_queue_pending"> Notes</a>
-{% endif %}
-
-{% if is_parent %}
-<a href = "/notes_queue_pending"> Notes</a>
-{% endif %}
-
-{% if is_teacher %}
-<a href = "/notes_queue_pending"> Notes</a>
-{% endif %}
-
-
-
-
-{% endif %}
+</div> <!-- /container -->
 
 
 

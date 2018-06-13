@@ -59,9 +59,16 @@ Each entry is a student, column 1 is parent 1, column 2 is parent 2
 
 @app.route('/')
 def root():
-    if 'user_id' in session:
-        return render_template('index.html', user_id = session["user_id"], username = "", first_name = session["first_name"], last_name = session["last_name"], email = session["email"], type = session["type"], in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
-    return render_template('index.html',  in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR)
+    if in_session():
+        if is_student():
+            pending = data.retrieve_absences_by_student( session["user_id"], "pending" )
+            history = data.retrieve_absences_by_student( session["user_id"], "history" )
+            print pending
+        if is_teacher():
+            pending = data.retrieve_absences_by_teacher( session["user_id"], "pending")
+            history = data.retrieve_absences_by_teacher( session["user_id"], "history" )
+        return render_template('index.html', user_id = session["user_id"], first_name = session["first_name"], last_name = session["last_name"], email = session["email"], type = session["type"], in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), dir = DIR, pending = pending, history = history)
+    return render_template('signin.html')
 
 
 ######################################### Student Link to Parent
@@ -130,7 +137,7 @@ def logout():
         session.pop('type')
         session.pop('osis')
         session.pop('parent_email')
-        return render_template("index.html", in_session = in_session(), is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher())
+        return redirect(url_for('root'))
     return render_template("failed_login.html", error = "YOU WERE NEVER LOGGED IN" )
 
 

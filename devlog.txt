@@ -100,3 +100,6 @@ aninshS -- 2018-06-12 15:56:33
 Added Parent emails
 We are going to assume that a parent email will be given in the CSV
 Session["parent_email"] will give the parent email needed for emails
+
+anishS -- 2018-06-12 17:47:33
+Styled index and login
