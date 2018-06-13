@@ -209,9 +209,18 @@ def submit_form():
         print "are you working here?"
 
         #need to add way to connect student and parent accounts
-        data.new_note( request.form["osis"], session["user_id"], 99, request.form["excuse"], 1, 0, request.form["date"], 0, class_list);
+        note_id = data.new_note( request.form["osis"], session["user_id"], 99, request.form["excuse"], 1, 0, request.form["date"], 0, class_list);
 
         #emailParent() Use Session["parent_email"] for parent email
+        sendemail(from_addr    = 'absencio.stuy@gmail.com',
+                  to_addr_list = [session['parent_email']],
+                  #cc_addr_list = ['ibnuljahan@gmail.com'],
+                  cc_addr_list = [],
+                  subject      = 'New Absent Note Available',
+                  message      = 'Hello, your child just created a new absent/lateness excuse note. Please view/sign it here: localhost:5000/parent_sign/' + str(note_id) + '',
+                  login        = 'absencio.stuy',
+                  password     = '@bsencio1')
+        
 
     return redirect(url_for("root"))
 
@@ -302,6 +311,26 @@ def is_teacher():
         print "Is Teacher: " + str(bool)
         return bool
 
+
+def sendemail(from_addr, to_addr_list, cc_addr_list,
+              subject, message,
+              login, password,
+              smtpserver='smtp.gmail.com:587'):
+    header  = 'From: %s\n' % from_addr
+    header += 'To: %s\n' % ','.join(to_addr_list)
+    header += 'Cc: %s\n' % ','.join(cc_addr_list)
+    header += 'Subject: %s\n\n' % subject
+    message = header + message
+
+    server = smtplib.SMTP(smtpserver)
+    server.starttls()
+    server.login(login,password)
+    problems = server.sendmail(from_addr, to_addr_list, message)
+    server.quit()
+    return problems
+
+
+    
 if __name__ == '__main__':
     app.debug = True #DANGER DANGER! Set to FALSE before deployment!
     app.run()

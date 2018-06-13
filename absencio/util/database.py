@@ -202,6 +202,7 @@ def new_note( osis, student_id, parent_id, explanation, signed_by_student, signe
 
     close(db)
     print "added to small"
+    return count
 
 def retrieve_absences_by_student( user_id, completed ):
     complete = {"pending": 0, "history": 1}
