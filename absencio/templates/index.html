@@ -31,8 +31,8 @@ Home
     <div class="col-lg-6">
       <h2> <u> Completed Notes </u> </h2> <br>
       {% for entry in history %}
-        <h4>Subheading</h4>
-        <p> {{entry}}   <a href="/display_note?id={{entry[0]}}"> Expand Note </a> </p>
+      <h4>{{ entry[7] }}</h4>
+      <p> {{entry}}   <a href="/display_note?id={{entry[0]}}"> Expand Note </a> </p>
       {% endfor %}
     </div>
   </div>

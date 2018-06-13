@@ -40,7 +40,16 @@ Digital Signature:
 
 <input class = "form-control" type="submit" value="Submit form">
 </form>
-</form
+{% endif %}
+
+{% if is_parent %}
+
+<div class = "form-group">
+<form action="/parent_sign/{{ id }}" method="POST" id = "sign_form">
+  <input class = "form-control" type="text" name="sigature" >
+  <input class = "form-control" type="submit" value="SIGN FORM">
+</form>
+
 {% endif %}
 
 

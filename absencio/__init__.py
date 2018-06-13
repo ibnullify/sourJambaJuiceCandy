@@ -262,7 +262,19 @@ def parent_sign(note_id):
         return redirect(url_for('root'))
     else:
         note = data.retrieve_absent_note( note_id )
-        return render_template("parent_sign.html", id = note_id, note = note)
+        note = list(note)
+        new_note = []
+        for period in note:
+            new_note.append(list(period))
+        for period in range(len(new_note)):
+            for datap in range(len(new_note[period])):
+                if datap == 1:
+                    name = data.retrieve_teacher_name_by_id(new_note[period][datap])
+                    new_note[period][datap] = name[0] + " " + name[1]
+                if datap == 3:
+                    d = {1: "Yes", 0: "No"}
+                    new_note[period][datap] = d[new_note[period][datap]]
+        return render_template("display_note.html", id = note_id, note = new_note, is_parent = True, is_teacher = False)
 
 #####TEACHERS
 
