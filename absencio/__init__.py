@@ -211,7 +211,7 @@ def submit_form():
         #need to add way to connect student and parent accounts
         data.new_note( request.form["osis"], session["user_id"], 99, request.form["excuse"], 1, 0, request.form["date"], 0, class_list);
 
-        #emailParent()
+        #emailParent() Use Session["parent_email"] for parent email
 
     return redirect(url_for("root"))
 
@@ -245,11 +245,11 @@ def display_note(note_id = 0):
 
 #####PARENTS
 
-def emailParent():
+def emailParent(parent_email):
     msg = MIMEText("hello world email")
     msg['Subject'] = 'Absence note'
     msg['From'] = "calebsmithsalzberg@gmail.com"
-    msg['To'] = "csmithsalzberg@stuy.edu"
+    msg['To'] = parent_email
     s = smtplib.SMTP('localhost:5000')
     s.sendmail(me, [you], msg.as_string())
     s.quit()

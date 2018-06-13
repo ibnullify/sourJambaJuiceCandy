@@ -64,7 +64,7 @@ def activate_account(email, first_name, last_name):
     if int(user_from_csv[2]) == 0:
         print "adding parent email"
         add_parent_account(id, user_from_csv[3])
-    results = [id, email, first_name, last_name, user_from_csv[2], user_from_csv[1], user_from_csv[3]]
+    results = [id, first_name, last_name, email, user_from_csv[2], user_from_csv[1], user_from_csv[3]]
     return results
 
 def check_account(user_info):
@@ -115,7 +115,7 @@ def add_parent_account( student_id, parent_email ):
     c = get_cursor(db)
 
     #command= "CREATE TABLE users(user_id INTEGER, username TEXT, password TEXT, first_name TEXT, last_name TEXT, email TEXT, type INTEGER)
-
+    count = 0
     command = "INSERT INTO student_parent VALUES(" + str(student_id) + ",'" + parent_email + "', " + str(count) + ", 0, '', -1, 0)"
     c.execute(command)
 
