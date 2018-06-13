@@ -155,7 +155,7 @@ def notes_queue_pending():
         if is_teacher():
             absences = data.retrieve_absences_by_teacher( session["user_id"], "pending")
         return render_template("notes_queue_pending.html", all_absences = absences)
-    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
+    return redirect(url_for("root"))
 
 @app.route('/notes_queue_history')
 def notes_queue_history():
@@ -165,8 +165,7 @@ def notes_queue_history():
         if is_teacher():
             absences = data.retrieve_absences_by_teacher( session["user_id"], "history")
         return render_template("notes_queue_history.html", all_absences = absences)
-    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
-
+    return redirect(url_for("root"))
 
 ######STUDENTS
 @app.route('/new_form')
@@ -175,7 +174,7 @@ def new_form():
         list = data.get_teacher_names()
         #list.append("Bob")
         return render_template("new_form.html", teacher_list = list)
-    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
+    return redirect(url_for("root"))
 
 
 @app.route('/submit_form' , methods=['POST','GET'])
@@ -214,8 +213,7 @@ def submit_form():
 
         #emailParent()
 
-        return redirect(url_for("notes_queue_pending"))
-    return render_template("index.html", is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher(), error = "You are not logged in")
+    return redirect(url_for("root"))
 
 
 @app.route('/display_note' , methods=['GET'])

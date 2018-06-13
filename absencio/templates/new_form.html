@@ -1,30 +1,39 @@
 {% extends "base.html" %}
 
 {% block title %}
-  Notes Queue
+New Note
 {% endblock %}
 
 
 {% block body %}
 
 
-<p> Make a new form </p>
+<center><h1><strong> Make a new form </strong></h1></center>
 
+<br>
 
-
+<center>
+<div style="width:50%;">
 <form action="/submit_form" method="post" id="submit_form">
 
-  OSIS:<br>
-  <input type="number" name="osis" required> <br>
-  DATE:<br>
-  <input type="date" name="date" required> <br>
-  EXCUSE:<br>
-  <input type="text" name="excuse" required> <br>
-  ABSENCE OR LATENESS? <br>
-  <input type="radio" name="form_type" id="absence" value="Absence" onclick="update_classes()" checked> Absence<br>
-  <input type="radio" name="form_type" id="lateness" value="Lateness" onclick="update_classes()"> Lateness<br>
+  <div class = "form-group">
+    OSIS:<br>
+    <input class = "form-control" type="number" name="osis" required> <br>
+  </div>
+  <div class = "form-group">
+    DATE:<br>
+    <input class = "form-control" type="date" name="date" required> <br>
+  </div>
+  <div class = "form-group">
+    EXCUSE:<br>
+    <input class = "form-control" type="text" name="excuse" required> <br>
+  </div>
+  <div class = "form-group">
+    ABSENCE OR LATENESS? <br><br>
+    <center><input type="radio" name="form_type" id="absence" value="Absence" onclick="update_classes()" checked> Absence<br>
+    <input type="radio" name="form_type"id="lateness" value="Lateness" onclick="update_classes()"> Lateness<br>
 
-  <input type="number" name="classes_missed" id="classes_missed" min="1" max="9" value="9" style="visibility: hidden;">
+    <input type="number" name="classes_missed" id="classes_missed" min="1" max="9" value="9" style="visibility: hidden;"></center>
   <br>
 
 
@@ -32,11 +41,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 1 Course Code: <br>
-	<input type="text" name="course_one"> <br>
+	<input type="text" class="form-control" name="course_one"> <br>
       </td>
       <td>
 	Period 1 Teacher: <br>
-	<select name="teacher_one">
+	<select class="form-control"name="teacher_one">
     {% for name in teacher_list %}
       <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
     {% endfor %}
@@ -48,11 +57,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 2 Course Code: <br>
-	<input type="text" name="course_two"> <br>
+	<input type="text" class="form-control" name="course_two"> <br>
       </td>
       <td>
 	Period 2 Teacher: <br>
-  <select name="teacher_two">
+  <select name="teacher_two" class="form-control">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %}
@@ -63,11 +72,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 3 Course Code: <br>
-	<input type="text" name="course_three"> <br>
+	<input type="text" class="form-control" name="course_three"> <br>
       </td>
       <td>
 	Period 3 Teacher: <br>
-  <select name="teacher_three">
+  <select class="form-control" name="teacher_three">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %} </select><br>
@@ -77,11 +86,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 4 Course Code: <br>
-	<input type="text" name="course_four"> <br>
+	<input class="form-control" type="text" name="course_four"> <br>
       </td>
       <td>
 	Period 4 Teacher: <br>
-  <select name="teacher_four">
+  <select class="form-control" name="teacher_four">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %} </select><br>
@@ -91,11 +100,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 5 Course Code: <br>
-	<input type="text" name="course_five"> <br>
+	<input type="text" class="form-control" name="course_five"> <br>
       </td>
       <td>
 	Period 5 Teacher: <br>
-  <select name="teacher_five">
+  <select class="form-control" name="teacher_five">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %} </select><br>
@@ -105,11 +114,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 6 Course Code: <br>
-	<input type="text" name="course_six"> <br>
+	<input class="form-control" type="text" name="course_six"> <br>
       </td>
       <td>
 	Period 6 Teacher: <br>
-  <select name="teacher_six">
+  <select class="form-control" name="teacher_six">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %} </select><br>
@@ -119,11 +128,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 7 Course Code: <br>
-	<input type="text" name="course_seven"> <br>
+	<input class="form-control" type="text" name="course_seven"> <br>
       </td>
       <td>
 	Period 7 Teacher: <br>
-  <select name="teacher_seven">
+  <select class="form-control" name="teacher_seven">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %} </select><br>
@@ -133,11 +142,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 8 Course Code: <br>
-	<input type="text" name="course_eight"> <br>
+	<input class="form-control" type="text" name="course_eight"> <br>
       </td>
       <td>
 	Period 8 Teacher: <br>
-  <select name="teacher_eight">
+  <select class="form-control" name="teacher_eight">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %} </select><br>
@@ -147,11 +156,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 9 Course Code: <br>
-	<input type="text" name="course_nine"> <br>
+	<input class="form-control" type="text" name="course_nine"> <br>
       </td>
       <td>
 	Period 9 Teacher: <br>
-  <select name="teacher_nine">
+  <select class="form-control" name="teacher_nine">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %} </select><br>
@@ -161,11 +170,11 @@
     <tr style="visibility: visible;">
       <td>
 	Period 10 Course Code: <br>
-	<input type="text" name="course_ten"> <br>
+	<input class="form-control" type="text" name="course_ten"> <br>
       </td>
       <td>
 	Period 10 Teacher: <br>
-  <select name="teacher_ten">
+  <select class="form-control" name="teacher_ten">
   {% for name in teacher_list %}
     <option value="{{ name[0] + " " + name[1] }}">{{ name[0] + " " + name[1] }}</option>
   {% endfor %}
@@ -178,10 +187,13 @@
   <br>
 
   Digital Signature:
-  <input type="text" name="sigature" >
+  <input class="form-control" type="text" name="sigature" >
+  <br>
 
-  <input type="submit" value="Submit form">
+  <input  class="form-control"type="submit" value="Submit form">
+</div>
 </form>
+</div> </center>
 
 
 

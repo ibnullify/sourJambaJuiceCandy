@@ -103,3 +103,6 @@ Session["parent_email"] will give the parent email needed for emails
 
 anishS -- 2018-06-12 17:47:33
 Styled index and login
+
+anishS -- 2018-06-12 18:00:33
+Styled New Note
