@@ -9,20 +9,38 @@
 
 
 
-THIS IS THE NOTE ID: {{ id }}
+<center><h1> <b> NOTE ID: {{ id }} </b> <h1></center>
 <br><br>
-{% for entry in note %}
-<p> {{entry}} </p>
-{% endfor %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Course Code</th>
+      <th scope="col">Teacher Name</th>
+      <th scope="col">Period</th>
+      <th scope="col">Signed?</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in note %}
+      <tr>
+        {% for data in entry %}
+        <th> {{ data }} </th>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% if is_teacher %}
 Digital Signature:
+<div class = "form-group">
 <form action = "/display_note/{{ id }}" method="post" id="form">
-<input type="text" name="sigature" >
+<input class = "form-control" type="text" name="sigature" >
 <input type="hidden" name="note_id" value="{{ id }}" />
 
-<input type="submit" value="Submit form">
+<input class = "form-control" type="submit" value="Submit form">
 </form>
+</form
 {% endif %}
 
 

@@ -224,11 +224,23 @@ def display_note(note_id = 0):
             print "Teacher signin"
             data.teacher_sign_note(note_id, session["user_id"])
             print "TEACHER SIGNED NOTE: " + str(note_id)
-            return "THANK YOU"
+            return redirect(url_for('root'))
         print request.args.get("id")
         id = request.args.get("id")
         note = data.retrieve_absent_note( id )
-        return render_template("display_note.html", id = id, note = note, is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher())
+        note = list(note)
+        new_note = []
+        for period in note:
+            new_note.append(list(period))
+        for period in range(len(new_note)):
+            for datap in range(len(new_note[period])):
+                if datap == 1:
+                    name = data.retrieve_teacher_name_by_id(new_note[period][datap])
+                    new_note[period][datap] = name[0] + " " + name[1]
+                if datap == 3:
+                    d = {1: "Yes", 0: "No"}
+                    new_note[period][datap] = d[new_note[period][datap]]
+        return render_template("display_note.html", id = id, note = new_note, is_student = is_student(), is_parent = is_parent(), is_teacher = is_teacher())
     return redirect(url_for("root"))
 
 #####PARENTS
@@ -247,7 +259,7 @@ def parent_sign(note_id):
     if request.method == "POST":
         data.parent_sign_note(note_id)
         print "PARENT SIGNED NOTE: " + str(note_id)
-        return "THANK YOU"
+        return redirect(url_for('root'))
     else:
         note = data.retrieve_absent_note( note_id )
         return render_template("parent_sign.html", id = note_id, note = note)

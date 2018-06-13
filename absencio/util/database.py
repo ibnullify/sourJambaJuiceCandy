@@ -148,6 +148,20 @@ def retrieve_teacher_id_by_name(first_name, last_name):
         return id[0]
     print "ERROR LOOKING UP TEACHER BY NAME"
 
+def retrieve_teacher_name_by_id(id):
+    db = get_db()
+    c = get_cursor(db)
+
+    command = "SELECT first_name, last_name FROM users WHERE user_id = " +str(id)
+    id = c.execute(command).fetchone()
+
+    if not id == None:
+        if len(id) > 1:
+            print "Multiple Teachers"
+            return id
+        return id[0]
+    print "ERROR LOOKING UP TEACHER BY NAME"
+
 #============================================================#
 #============================Absence Notes=========================#
 #============================================================#
