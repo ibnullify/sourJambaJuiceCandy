@@ -6,7 +6,7 @@
 **Stuyvesant, get ready** 
 
 **Check out our app: http://absencio.stuycs.org** <br>
-**[DEMO](absencio/absencio.mp4)**
+**[DEMO VIDEO](https://youtu.be/huB9eijdA9M)**
 
 ### Overview: Absencio aims to simplfy and streamline the process of absence notes. 
 * ***Students***:
