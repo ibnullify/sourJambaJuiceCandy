@@ -220,7 +220,7 @@ def submit_form():
                   #cc_addr_list = ['ibnuljahan@gmail.com'],
                   cc_addr_list = [],
                   subject      = 'New Absent Note Available',
-                  message      = 'Hello, your child just created a new absent/lateness excuse note. Please view/sign it here: localhost:5000/parent_sign/' + str(note_id) + '',
+                  message      = 'Hello, your child just created a new absent/lateness excuse note. Please view/sign it here: localhost:5000/parent_sign/' + str(note_id) + ' or here: absencio.stuycs.org/parent_sign/' + str(note_id) + '',
                   login        = 'absencio.stuy',
                   password     = '@bsencio1')
 
