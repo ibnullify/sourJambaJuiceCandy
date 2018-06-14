@@ -5,7 +5,7 @@ import os #Used for os.remove()
 
 #f= "absence_sys.db"
 basedir = os.path.abspath(os.path.dirname(__file__))
-f = basedir + "/../absence_sys.db"
+f = basedir + "/absence_sys.db"
 try:
     #pass
     os.remove(f) #Used During Testing to remove file at the beginning
