@@ -70,6 +70,7 @@ except:
 
 #new_user("ijahan1@stuy.edu", "ibnul", "jahan", 0, "274373333")
 new_user("mrshenoy@stuy.edu", "teacher", "shenoy", 2, "")
+new_user("teacher@stuy.edu", "Teacher", "Lebron", 2, "")
 #new_user("name", "pass")
 
 

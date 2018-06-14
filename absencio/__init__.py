@@ -97,6 +97,7 @@ def login():
         return redirect(url_for("signin"))
     if request.form["email"].find("@stuy.edu") == -1:
         print "NEEDS TO BE A STUY.EDU EMAIL"
+        pass
         return render_template('failed_login.html', error = "Need Stuy.edu email") #add error message as a parameter
     user = data.check_account(request.form)
     if user[0]:
@@ -220,7 +221,7 @@ def submit_form():
                   message      = 'Hello, your child just created a new absent/lateness excuse note. Please view/sign it here: localhost:5000/parent_sign/' + str(note_id) + '',
                   login        = 'absencio.stuy',
                   password     = '@bsencio1')
-        
+
 
     return redirect(url_for("root"))
 
@@ -330,7 +331,7 @@ def sendemail(from_addr, to_addr_list, cc_addr_list,
     return problems
 
 
-    
+
 if __name__ == '__main__':
     app.debug = True #DANGER DANGER! Set to FALSE before deployment!
     app.run()
