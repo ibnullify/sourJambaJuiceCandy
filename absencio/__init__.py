@@ -95,10 +95,12 @@ def login():
     #if a form hasn't been submitted
     if request.method == 'GET':
         return redirect(url_for("signin"))
+    '''
     if request.form["email"].find("@stuy.edu") == -1:
         print "NEEDS TO BE A STUY.EDU EMAIL"
         pass
         return render_template('failed_login.html', error = "Need Stuy.edu email") #add error message as a parameter
+    '''
     user = data.check_account(request.form)
     if user[0]:
         print "logged"
