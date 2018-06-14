@@ -63,9 +63,8 @@ def activate_account(email, first_name, last_name):
     #command = "SELECT password FROM users WHERE email = '" + email + "'"
     user_from_csv = activateable(email) #[email, osis, type]
     id = new_user(email, first_name, last_name, user_from_csv[2], user_from_csv[1])
-    if int(user_from_csv[2]) == 0:
-        print "adding parent email"
-        add_parent_account(id, user_from_csv[3])
+    print "adding parent email"
+    add_parent_account(id, user_from_csv[3])
     results = [id, first_name, last_name, email, user_from_csv[2], user_from_csv[1], user_from_csv[3]]
     return results
 
